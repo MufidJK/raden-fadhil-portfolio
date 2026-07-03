@@ -130,95 +130,98 @@ export function MediaCarousel({ media }: MediaCarouselProps) {
   const activeItem = media[activeIndex]
 
   return (
-    <section className="flex flex-col gap-4 w-full" aria-label="Project media gallery">
+    <div className="w-full max-w-5xl mx-auto px-16 mb-24" aria-label="Project media gallery">
       <Carousel
         setApi={setApi}
         plugins={[plugin.current]}
-        className="w-full max-w-5xl mx-auto relative px-14"
+        className="relative w-full"
         onMouseEnter={() => plugin.current.stop()}
         onMouseLeave={() => plugin.current.play()}
       >
-        <CarouselContent>
-          {media.map((item) => (
-            <CarouselItem key={item.id}>
-              {item.type === "video" ? (
-                <CarouselVideo item={item} plugin={plugin} />
-              ) : (
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div 
-                      role="button"
-                      aria-label={`View ${item.alt ?? "image"}`}
-                      className="relative w-full aspect-video cursor-pointer overflow-hidden rounded-xl border border-surface-variant focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring bg-surface-container-low"
-                    >
-                      <Image
-                        src={item.url}
-                        alt={item.alt ?? "Media"}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 1024px) 100vw, 1024px"
-                      />
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-7xl w-full p-1 border-none bg-transparent shadow-none" aria-describedby={undefined}>
-                    <div className="relative w-full h-[80vh] bg-black/95 rounded-2xl overflow-hidden flex items-center justify-center">
-                      <Image
-                        src={item.url}
-                        alt={item.alt ?? "Media Expanded"}
-                        fill
-                        className="object-contain"
-                        sizes="100vw"
-                        priority
-                      />
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              )}
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        
+        <div className="relative rounded-xl overflow-hidden aspect-video border border-surface-variant bg-surface-container-low">
+          <CarouselContent>
+            {media.map((item) => (
+              <CarouselItem key={item.id}>
+                {item.type === "video" ? (
+                  <CarouselVideo item={item} plugin={plugin} />
+                ) : (
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <div 
+                        role="button"
+                        aria-label={`View ${item.alt ?? "image"}`}
+                        className="relative w-full aspect-video cursor-pointer overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      >
+                        <Image
+                          src={item.url}
+                          alt={item.alt ?? "Media"}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 1024px) 100vw, 1024px"
+                        />
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-7xl w-full p-1 border-none bg-transparent shadow-none" aria-describedby={undefined}>
+                      <div className="relative w-full h-[80vh] bg-black/95 rounded-2xl overflow-hidden flex items-center justify-center">
+                        <Image
+                          src={item.url}
+                          alt={item.alt ?? "Media Expanded"}
+                          fill
+                          className="object-contain"
+                          sizes="100vw"
+                          priority
+                        />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                )}
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </div>
+          
         {totalSlides > 1 && (
           <>
-            <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 z-30 bg-black/50 backdrop-blur-sm border-0 text-white/80 hover:bg-black/70 hover:text-white" />
-            <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 z-30 bg-black/50 backdrop-blur-sm border-0 text-white/80 hover:bg-black/70 hover:text-white" />
+            <CarouselPrevious className="absolute -left-12 top-1/2 -translate-y-1/2 z-10 bg-black/50 backdrop-blur-sm border-0 text-white/80 hover:bg-black/70 hover:text-white" />
+            <CarouselNext className="absolute -right-12 top-1/2 -translate-y-1/2 z-10 bg-black/50 backdrop-blur-sm border-0 text-white/80 hover:bg-black/70 hover:text-white" />
           </>
         )}
-      </Carousel>
 
-      {/* Dot Indicators + Counter */}
-      {totalSlides > 1 && (
-        <div className="flex items-center justify-center gap-3">
-          <div className="flex items-center gap-1.5" role="tablist" aria-label="Slide indicators">
-            {media.map((item, index) => (
-              <button
-                key={item.id}
-                type="button"
-                role="tab"
-                aria-selected={index === activeIndex}
-                aria-label={`Go to slide ${index + 1}`}
-                onClick={() => api?.scrollTo(index)}
-                className={cn(
-                  "h-1.5 rounded-full transition-all duration-300",
-                  index === activeIndex
-                    ? "w-6 bg-foreground"
-                    : "w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                )}
-              />
-            ))}
+        {/* DOTS & CAPTION - Absolutely positioned at the bottom so they don't push the arrows down */}
+        {totalSlides > 1 && (
+          <div className="absolute -bottom-16 left-0 right-0 flex flex-col items-center gap-2">
+            <div className="flex items-center justify-center gap-3">
+              <div className="flex items-center gap-1.5" role="tablist" aria-label="Slide indicators">
+                {media.map((item, index) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={index === activeIndex}
+                    aria-label={`Go to slide ${index + 1}`}
+                    onClick={() => api?.scrollTo(index)}
+                    className={cn(
+                      "h-1.5 rounded-full transition-all duration-300",
+                      index === activeIndex
+                        ? "w-6 bg-foreground"
+                        : "w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                    )}
+                  />
+                ))}
+              </div>
+              <span className="font-jetbrains text-xs text-muted-foreground ml-2">
+                {activeIndex + 1}/{totalSlides}
+              </span>
+            </div>
+            {/* Caption */}
+            {activeItem?.alt && (
+              <span className="text-sm text-muted-foreground text-center font-jetbrains">
+                {activeItem.alt}
+              </span>
+            )}
           </div>
-          <span className="font-jetbrains text-xs text-muted-foreground ml-2">
-            {activeIndex + 1}/{totalSlides}
-          </span>
-        </div>
-      )}
-
-      {/* Caption */}
-      {activeItem?.alt && (
-        <p className="font-jetbrains text-xs text-muted-foreground text-center">
-          {activeItem.alt}
-        </p>
-      )}
-    </section>
+        )}
+      </Carousel>
+    </div>
   )
 }

@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { MediaCarousel } from "@/components/projects/media-carousel"
+import { TopNavBar } from "@/components/top-nav-bar"
+import { SiteFooter } from "@/components/site-footer"
 
 export interface PageProps {
   params: Promise<{ slug: string }>
@@ -20,10 +22,12 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col pt-24 pb-12">
-      <main className="container mx-auto max-w-container-max px-4 sm:px-6 lg:px-8 w-full flex flex-col gap-12">
+    <div className="min-h-screen bg-background flex flex-col items-center">
+      <TopNavBar />
+      
+      <main className="flex-1 container mx-auto max-w-container-max px-4 sm:px-6 lg:px-8 w-full flex flex-col gap-12 pt-8 pb-12">
         {/* Back Navigation */}
-        <Link href="/" className="inline-flex items-center gap-2 text-sm font-jetbrains text-muted-foreground hover:text-foreground transition-colors w-fit">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm font-jetbrains text-muted-foreground hover:text-foreground transition-colors w-fit mt-20">
           <ArrowLeft className="w-4 h-4" />
           Back to Systems
         </Link>
@@ -78,6 +82,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           </div>
         </section>
       </main>
+      <SiteFooter />
     </div>
   )
 }
