@@ -1,3 +1,11 @@
+export interface ProjectMedia {
+  id: string;
+  type: "image" | "video";
+  url: string;
+  alt?: string;
+  aiPrompt?: string;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -6,6 +14,7 @@ export interface Project {
   category: string;
   link: string;
   size?: "small" | "medium" | "wide";
+  media: ProjectMedia[];
 }
 
 export const mockProjects: Project[] = [
@@ -17,6 +26,40 @@ export const mockProjects: Project[] = [
     category: "Reptile IoT",
     link: "/projects/reptile-node-v2",
     size: "wide",
+    media: [
+      {
+        id: "REPTILE_NODE_V2_M1",
+        type: "video",
+        url: "/videos/terrarium-demo.mp4",
+        alt: "Terrarium climate controller system demo",
+      },
+      {
+        id: "REPTILE_NODE_V2_M2",
+        type: "image",
+        url: "https://picsum.photos/seed/pic1/1920/1080",
+        alt: "Custom PCB with ESP32 microcontroller",
+        aiPrompt: "A photorealistic, hyper-detailed close-up of a custom PCB with glowing LEDs and microcontrollers, dark cinematic lighting, cyberpunk hardware aesthetic, 8k resolution.",
+      },
+      {
+        id: "REPTILE_NODE_V2_M3",
+        type: "image",
+        url: "https://picsum.photos/seed/pic2/1920/1080",
+        alt: "Humidity sensor array mounted inside terrarium",
+      },
+      {
+        id: "REPTILE_NODE_V2_M4",
+        type: "image",
+        url: "https://picsum.photos/seed/pic3/1920/1080",
+        alt: "LoRa mesh networking topology diagram",
+        aiPrompt: "A futuristic network topology diagram with glowing nodes connected by cyan laser lines on a dark background, holographic UI aesthetic.",
+      },
+      {
+        id: "REPTILE_NODE_V2_M5",
+        type: "video",
+        url: "/videos/terrarium-assembly.mp4",
+        alt: "Hardware assembly timelapse",
+      },
+    ],
   },
   {
     id: "HEX_GAIT_01",
@@ -26,6 +69,33 @@ export const mockProjects: Project[] = [
     category: "Robotics",
     link: "/projects/hexapod-gait-engine",
     size: "medium",
+    media: [
+      {
+        id: "HEX_GAIT_01_M1",
+        type: "video",
+        url: "/videos/hexapod-gait-demo.mp4",
+        alt: "Hexapod walking gait demonstration",
+      },
+      {
+        id: "HEX_GAIT_01_M2",
+        type: "image",
+        url: "https://picsum.photos/seed/pic4/1920/1080",
+        alt: "Hexapod robot on test platform",
+        aiPrompt: "A high-detail hexapod robot with chrome legs walking on a matte black surface, cinematic studio lighting, futuristic robotic engineering aesthetic.",
+      },
+      {
+        id: "HEX_GAIT_01_M3",
+        type: "image",
+        url: "https://picsum.photos/seed/pic5/1920/1080",
+        alt: "Inverse kinematics visualization overlay",
+      },
+      {
+        id: "HEX_GAIT_01_M4",
+        type: "image",
+        url: "https://picsum.photos/seed/pic6/1920/1080",
+        alt: "ROS2 control node architecture",
+      },
+    ],
   },
   {
     id: "PWR_RACK",
@@ -35,6 +105,33 @@ export const mockProjects: Project[] = [
     category: "Automation",
     link: "/projects/smart-power-rack",
     size: "medium",
+    media: [
+      {
+        id: "PWR_RACK_M1",
+        type: "image",
+        url: "https://picsum.photos/seed/pic7/1920/1080",
+        alt: "42U server rack with power monitoring LEDs",
+        aiPrompt: "A dramatic photo of a 42U server rack in a dark room with glowing blue and green LEDs, photorealistic datacenter aesthetic, 8k resolution.",
+      },
+      {
+        id: "PWR_RACK_M2",
+        type: "video",
+        url: "/videos/power-rack-demo.mp4",
+        alt: "Smart power rack live switching demo",
+      },
+      {
+        id: "PWR_RACK_M3",
+        type: "image",
+        url: "https://picsum.photos/seed/pic8/1920/1080",
+        alt: "KiCad PCB layout for power monitoring board",
+      },
+      {
+        id: "PWR_RACK_M4",
+        type: "image",
+        url: "https://picsum.photos/seed/pic9/1920/1080",
+        alt: "Current sensing IC close-up on prototype board",
+      },
+    ],
   },
   {
     id: "LAB_DASH",
@@ -44,6 +141,39 @@ export const mockProjects: Project[] = [
     category: "Web App",
     link: "/projects/homelab-dashboard",
     size: "wide",
+    media: [
+      {
+        id: "LAB_DASH_M1",
+        type: "image",
+        url: "https://picsum.photos/seed/pic10/1920/1080",
+        alt: "Homelab dashboard overview showing system metrics",
+        aiPrompt: "A sleek dark-mode dashboard UI with real-time charts, CPU gauges, and network graphs, neon accent colors on dark background, modern SaaS aesthetic.",
+      },
+      {
+        id: "LAB_DASH_M2",
+        type: "video",
+        url: "/videos/dashboard-live-demo.mp4",
+        alt: "Live dashboard demo with real-time WebSocket updates",
+      },
+      {
+        id: "LAB_DASH_M3",
+        type: "image",
+        url: "https://picsum.photos/seed/pic11/1920/1080",
+        alt: "Grafana panel integration with custom data sources",
+      },
+      {
+        id: "LAB_DASH_M4",
+        type: "image",
+        url: "https://picsum.photos/seed/pic12/1920/1080",
+        alt: "Mobile responsive view of the dashboard",
+      },
+      {
+        id: "LAB_DASH_M5",
+        type: "image",
+        url: "https://picsum.photos/seed/pic13/1920/1080",
+        alt: "WebSocket connection status panel",
+      },
+    ],
   },
   {
     id: "EDGE_AI_VISION",
@@ -53,6 +183,39 @@ export const mockProjects: Project[] = [
     category: "Edge AI",
     link: "/projects/tensor-vision-node",
     size: "wide",
+    media: [
+      {
+        id: "EDGE_AI_VISION_M1",
+        type: "image",
+        url: "https://picsum.photos/seed/pic14/1920/1080",
+        alt: "Coral Edge TPU M.2 module on custom carrier board",
+        aiPrompt: "A hyper-detailed macro shot of an M.2 AI accelerator chip on a custom green PCB, with glowing trace lines, cinematic hardware photography.",
+      },
+      {
+        id: "EDGE_AI_VISION_M2",
+        type: "video",
+        url: "/videos/tensor-vision-inference.mp4",
+        alt: "On-device inference demo with bounding box detection",
+      },
+      {
+        id: "EDGE_AI_VISION_M3",
+        type: "image",
+        url: "https://picsum.photos/seed/pic15/1920/1080",
+        alt: "Security camera feed with AI detection overlay",
+      },
+      {
+        id: "EDGE_AI_VISION_M4",
+        type: "image",
+        url: "https://picsum.photos/seed/pic16/1920/1080",
+        alt: "KiCad 3D render of the M.2 carrier PCB",
+      },
+      {
+        id: "EDGE_AI_VISION_M5",
+        type: "image",
+        url: "https://picsum.photos/seed/pic17/1920/1080",
+        alt: "ESP32-S3 dev board connected to Edge TPU",
+      },
+    ],
   },
   {
     id: "LORA_GATEWAY_SOLAR",
@@ -62,6 +225,27 @@ export const mockProjects: Project[] = [
     category: "IoT Network",
     link: "/projects/autonomous-lorawan-gateway",
     size: "medium",
+    media: [
+      {
+        id: "LORA_GATEWAY_SOLAR_M1",
+        type: "image",
+        url: "https://picsum.photos/seed/pic18/1920/1080",
+        alt: "Solar-powered gateway enclosure in the field",
+        aiPrompt: "A ruggedized IoT gateway box mounted on a pole in a lush green field, solar panel on top, dramatic sunset lighting, photorealistic outdoor tech photography.",
+      },
+      {
+        id: "LORA_GATEWAY_SOLAR_M2",
+        type: "video",
+        url: "/videos/lorawan-deployment.mp4",
+        alt: "Gateway field deployment and range test",
+      },
+      {
+        id: "LORA_GATEWAY_SOLAR_M3",
+        type: "image",
+        url: "https://picsum.photos/seed/pic19/1920/1080",
+        alt: "SX1302 concentrator module soldered to carrier board",
+      },
+    ],
   },
   {
     id: "UAV_TELEMETRY",
@@ -71,6 +255,33 @@ export const mockProjects: Project[] = [
     category: "Robotics",
     link: "/projects/uav-telemetry-link",
     size: "medium",
+    media: [
+      {
+        id: "UAV_TELEMETRY_M1",
+        type: "video",
+        url: "/videos/drone-telemetry-flight.mp4",
+        alt: "Live telemetry during test flight",
+      },
+      {
+        id: "UAV_TELEMETRY_M2",
+        type: "image",
+        url: "https://picsum.photos/seed/pic20/1920/1080",
+        alt: "Custom drone with RF telemetry module visible",
+        aiPrompt: "A professional racing drone hovering mid-air with a visible RF module, dark sky background with motion blur, high-speed photography aesthetic.",
+      },
+      {
+        id: "UAV_TELEMETRY_M3",
+        type: "image",
+        url: "https://picsum.photos/seed/pic21/1920/1080",
+        alt: "RF module PCB with SMA connector close-up",
+      },
+      {
+        id: "UAV_TELEMETRY_M4",
+        type: "image",
+        url: "https://picsum.photos/seed/pic22/1920/1080",
+        alt: "PID loop tuning interface on ground station",
+      },
+    ],
   },
   {
     id: "FPGA_SDR",
@@ -80,5 +291,38 @@ export const mockProjects: Project[] = [
     category: "Signal Processing",
     link: "/projects/fpga-sdr",
     size: "wide",
+    media: [
+      {
+        id: "FPGA_SDR_M1",
+        type: "image",
+        url: "https://picsum.photos/seed/pic23/1920/1080",
+        alt: "iCE40 FPGA development board with signal probes",
+        aiPrompt: "A macro photograph of an FPGA chip on a development board with oscilloscope probes attached, deep blue PCB, dramatic lab lighting.",
+      },
+      {
+        id: "FPGA_SDR_M2",
+        type: "video",
+        url: "/videos/sdr-spectrum-analysis.mp4",
+        alt: "Real-time 2.4GHz spectrum waterfall analysis",
+      },
+      {
+        id: "FPGA_SDR_M3",
+        type: "image",
+        url: "https://picsum.photos/seed/pic24/1920/1080",
+        alt: "Verilog simulation waveform output",
+      },
+      {
+        id: "FPGA_SDR_M4",
+        type: "image",
+        url: "https://picsum.photos/seed/pic25/1920/1080",
+        alt: "SDR antenna array on rooftop test rig",
+      },
+      {
+        id: "FPGA_SDR_M5",
+        type: "image",
+        url: "https://picsum.photos/seed/pic26/1920/1080",
+        alt: "DSP filter response curves on oscilloscope",
+      },
+    ],
   },
 ];

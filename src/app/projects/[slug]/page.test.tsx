@@ -4,16 +4,19 @@ import { notFound } from "next/navigation"
 import React from "react"
 
 jest.mock("next/navigation", () => ({
-  notFound: jest.fn(),
+  notFound: jest.fn(() => {
+    throw new Error("NEXT_NOT_FOUND")
+  }),
 }))
 
-jest.mock("next/image", () => ({
-  __esModule: true,
-  default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img alt={props.alt || ""} {...props} />
-  },
-}))
+jest.mock("next/image", () => {
+  function MockImage(props: Record<string, unknown>) {
+    const { fill, priority, ...rest } = props
+    return <img data-fill={fill ? "true" : undefined} data-priority={priority ? "true" : undefined} {...rest} />
+  }
+  MockImage.displayName = "MockImage"
+  return { __esModule: true, default: MockImage }
+})
 
 describe("ProjectDetailPage", () => {
   beforeEach(() => {
@@ -28,7 +31,9 @@ describe("ProjectDetailPage", () => {
   })
 
   it("calls notFound when an invalid slug is provided", async () => {
-    await ProjectDetailPage({ params: Promise.resolve({ slug: "non-existent-project" }) })
+    await expect(
+      ProjectDetailPage({ params: Promise.resolve({ slug: "non-existent-project" }) })
+    ).rejects.toThrow("NEXT_NOT_FOUND")
     expect(notFound).toHaveBeenCalled()
   })
 })
