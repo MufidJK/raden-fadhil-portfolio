@@ -9,8 +9,10 @@ jest.mock("next/dynamic", () => {
     // Return a component that initially shows loading, then resolves
     const DynamicComponent = (props: Record<string, unknown>) => {
       const [Component, setComponent] =
-        require("react").useState<React.ComponentType | null>(null)
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        require("react").useState(null as React.ComponentType | null)
 
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       require("react").useEffect(() => {
         let cancelled = false
         loader().then((mod: { default: React.ComponentType }) => {
@@ -44,6 +46,7 @@ describe("TelemetryWidgetLoader", () => {
   it("renders the loading fallback initially", async () => {
     // Use require to avoid hoisting above the mock
     const TelemetryWidgetLoader =
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       require("./telemetry-widget-loader").default
 
     await act(async () => {
@@ -61,6 +64,7 @@ describe("TelemetryWidgetLoader", () => {
 
   it("renders the TelemetryWidget after lazy load resolves", async () => {
     const TelemetryWidgetLoader =
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       require("./telemetry-widget-loader").default
 
     render(<TelemetryWidgetLoader />)

@@ -2,17 +2,19 @@
 
 import * as React from "react"
 
-const tabs = ["All", "Reptile IoT", "Automation", "Robotics"]
+interface FilterTabsProps {
+  tabs: string[]
+  activeTab: string
+  onTabChange: (tab: string) => void
+}
 
-export function FilterTabs() {
-  const [activeTab, setActiveTab] = React.useState("All")
-
+export function FilterTabs({ tabs, activeTab, onTabChange }: FilterTabsProps) {
   return (
     <div className="flex flex-wrap items-center gap-2">
       {tabs.map(tab => (
         <button
           key={tab}
-          onClick={() => setActiveTab(tab)}
+          onClick={() => onTabChange(tab)}
           className={`px-3 py-1 text-sm font-medium font-jetbrains rounded-md transition-colors ${
             activeTab === tab
               ? "bg-primary text-primary-foreground"

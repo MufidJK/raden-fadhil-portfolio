@@ -7,6 +7,8 @@ describe("ProjectCard", () => {
     title: "Test Project",
     description: "This is a test description.",
     tags: ["React", "Jest"],
+    category: "Robotics",
+    link: "/projects/test-project",
     size: "wide" as const
   }
 

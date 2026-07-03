@@ -15,7 +15,7 @@ describe("ScrollReveal", () => {
       disconnect: jest.fn(),
       // Attach callback so we can simulate intersection manually in tests
       _trigger: callback
-    })) as any
+    })) as unknown as typeof window.IntersectionObserver
   })
 
   afterEach(() => {
