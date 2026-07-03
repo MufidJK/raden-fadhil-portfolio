@@ -6,6 +6,7 @@ import { ThemeSyncWidget } from "@/components/dashboard/theme-sync-widget"
 import { ProjectsGrid } from "@/components/projects/projects-grid"
 import { SiteFooter } from "@/components/site-footer"
 import TelemetryWidget from "@/components/dashboard/telemetry-widget-loader"
+import { ScrollReveal } from "@/components/ui/scroll-reveal"
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <main className="flex-1 w-full flex flex-col">
         <HeroSection />
         
+        <ScrollReveal>
         <section id="dashboard" className="container mx-auto max-w-container-max px-4 sm:px-6 lg:px-8 py-12">
           <div className="flex flex-col gap-6">
             <h2 className="text-2xl md:text-3xl font-bold font-sans tracking-tight text-foreground">
@@ -30,10 +32,13 @@ export default function Home() {
             </div>
           </div>
         </section>
+        </ScrollReveal>
         
+        <ScrollReveal>
         <section id="projects">
           <ProjectsGrid />
         </section>
+        </ScrollReveal>
       </main>
       
       <SiteFooter />

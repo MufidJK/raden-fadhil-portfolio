@@ -2,23 +2,25 @@ import * as React from "react"
 import Image from "next/image"
 import { Mail, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { ScrollReveal } from "@/components/ui/scroll-reveal"
 
 export function HeroSection() {
   return (
-    <section className="container mx-auto max-w-container-max px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-      <div className="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-12">
-        <div className="relative shrink-0 w-32 h-32 md:w-48 md:h-48 overflow-hidden rounded-2xl border-4 border-surface-container-low shadow-lg bg-surface-variant">
-          {/* Using a placeholder path; user will provide actual image */}
-          <Image
-            src="/profile.jpg"
-            alt="Raden Fadhil Triansyah"
+    <section className="min-h-[calc(100dvh-4rem)] flex items-center py-16 md:py-24 mb-[20vh]">
+      <div className="container mx-auto max-w-container-max px-4 sm:px-6 lg:px-8 w-full">
+        <div className="w-full flex flex-col md:flex-row items-center gap-8 md:gap-12">
+          <ScrollReveal trigger="onMount" className="relative shrink-0 w-48 h-48 md:w-64 md:h-64 overflow-hidden rounded-2xl border-4 border-surface-container-low shadow-lg bg-surface-variant">
+            {/* AI IMAGE GENERATION PROMPT: A highly cinematic, photorealistic portrait of an elite hardware engineer, cyberpunk and modern IoT aesthetic, dark theme, sleek workspace with blurred circuit boards and glowing telemetry screens in the background, dramatic lighting, 8k, highly detailed. */}
+            <Image
+              src="/profile.webp"
+              alt="Raden Fadhil Triansyah"
             fill
             className="object-cover"
             priority
           />
-        </div>
+        </ScrollReveal>
         
-        <div className="flex flex-col gap-4">
+        <ScrollReveal trigger="onMount" delay={200} className="flex flex-col gap-4 w-full md:flex-1">
           <div className="flex flex-col gap-2">
             <h1 className="text-4xl md:text-5xl lg:text-display font-bold font-sans tracking-tight text-foreground">
               Raden Fadhil Triansyah
@@ -34,7 +36,7 @@ export function HeroSection() {
             </div>
           </div>
           
-          <p className="text-body-lg text-foreground max-w-2xl leading-relaxed">
+          <p className="text-body-lg text-foreground w-full max-w-prose leading-relaxed">
             Architecting robust physical-digital bridges. Specializing in low-latency telemetry, embedded systems, and scalable IoT infrastructures. I build hardware that thinks and software that acts.
           </p>
 
@@ -46,6 +48,7 @@ export function HeroSection() {
               Resume <Download className="w-4 h-4" />
             </Button>
           </div>
+        </ScrollReveal>
         </div>
       </div>
     </section>
