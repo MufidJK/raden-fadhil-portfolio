@@ -9,7 +9,15 @@ describe("ProjectCard", () => {
     tags: ["React", "Jest"],
     category: "Robotics",
     link: "/projects/test-project",
-    size: "wide" as const
+    size: "wide" as const,
+    media: [
+      {
+        id: "test-media-1",
+        type: "image" as const,
+        url: "/test-image.jpg",
+        alt: "Test image",
+      },
+    ],
   }
 
   it("renders the project title and description", () => {
