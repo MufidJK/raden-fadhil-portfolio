@@ -15,7 +15,7 @@ export default function Home() {
     <div className="min-h-screen bg-background flex flex-col items-center overflow-x-hidden">
       <TopNavBar />
       
-      <main className="flex-1 w-full flex flex-col">
+      <main className="flex-1 w-full flex flex-col pt-16">
         {/* SECTION 1: Hero Section */}
         <HeroSection />
         

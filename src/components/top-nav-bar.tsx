@@ -1,10 +1,10 @@
 import * as React from "react"
 import Link from "next/link"
 import { ThemeToggleButton } from "./theme-toggle-button"
-
+import { MobileNav } from "./mobile-nav"
 export function TopNavBar() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-outline-variant bg-surface-container">
+    <header className="fixed top-0 left-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 max-w-container-max items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center space-x-2">
@@ -31,6 +31,9 @@ export function TopNavBar() {
 
         <div className="flex items-center gap-4">
           <ThemeToggleButton />
+          <div className="md:hidden">
+            <MobileNav />
+          </div>
         </div>
       </div>
     </header>

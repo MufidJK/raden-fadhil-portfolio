@@ -48,6 +48,7 @@ function getClampedLightness(theme: string | undefined): number {
 export function ThemeSyncWidget() {
   const wheelRef = React.useRef<HTMLDivElement>(null)
   const dotRef = React.useRef<HTMLDivElement>(null)
+  const hexTextRef = React.useRef<HTMLSpanElement>(null)
   const { resolvedTheme } = useTheme()
 
   const [state, setState] = React.useState<WidgetState>({
@@ -58,6 +59,12 @@ export function ThemeSyncWidget() {
 
   const isDragging = React.useRef(false)
   const reqFrame = React.useRef<number | null>(null)
+
+  React.useEffect(() => {
+    return () => {
+      if (reqFrame.current !== null) cancelAnimationFrame(reqFrame.current)
+    }
+  }, [])
 
   /** Track the latest resolvedTheme via ref to avoid stale closures in rAF */
   const themeRef = React.useRef(resolvedTheme)
@@ -149,6 +156,11 @@ export function ThemeSyncWidget() {
       lastHueRef.current = h
       lastSatRef.current = s
 
+      // Update HEX text DOM directly
+      if (hexTextRef.current) {
+        hexTextRef.current.textContent = hex
+      }
+
       // ── Global background sync ──
       // This project uses Tailwind v4 where --background holds a FULL
       // CSS color value (hex or hsl(...)), NOT raw "H S% L%" tokens.
@@ -226,7 +238,7 @@ export function ThemeSyncWidget() {
 
       <div className="flex items-center justify-between p-4 border-t border-surface-variant">
         <span className="font-jetbrains text-label-sm text-muted-foreground">HEX</span>
-        <span className="font-jetbrains text-code font-bold text-foreground">{state.hex}</span>
+        <span ref={hexTextRef} className="font-jetbrains text-code font-bold text-foreground">{state.hex}</span>
       </div>
     </Card>
   )
