@@ -26,43 +26,9 @@ interface MediaCarouselProps {
 
 function CarouselVideo({
   item,
-  plugin,
 }: {
   item: ProjectMedia
-  plugin: React.MutableRefObject<any>
 }) {
-  const videoRef = React.useRef<HTMLVideoElement>(null)
-  const [isPlaying, setIsPlaying] = React.useState(false)
-
-  const handlePlay = React.useCallback(() => {
-    plugin.current.stop()
-    setIsPlaying(true)
-  }, [plugin])
-
-  const handlePause = React.useCallback(() => {
-    plugin.current.play()
-    setIsPlaying(false)
-  }, [plugin])
-
-  const handleEnded = React.useCallback(() => {
-    plugin.current.play()
-    setIsPlaying(false)
-  }, [plugin])
-
-  const togglePlay = (e?: React.MouseEvent) => {
-    if (e) {
-      e.preventDefault()
-      e.stopPropagation()
-    }
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause()
-      } else {
-        videoRef.current.play()
-      }
-    }
-  }
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -109,8 +75,9 @@ export function MediaCarousel({ media }: MediaCarouselProps) {
   const [api, setApi] = React.useState<CarouselApi>()
   const [activeIndex, setActiveIndex] = React.useState(0)
   
-  const plugin = React.useRef(
-    Autoplay({ delay: 5000, stopOnInteraction: true })
+  const plugin = React.useMemo(
+    () => Autoplay({ delay: 5000, stopOnInteraction: true }),
+    []
   )
 
   const totalSlides = media.length
@@ -118,6 +85,7 @@ export function MediaCarousel({ media }: MediaCarouselProps) {
   React.useEffect(() => {
     if (!api) return
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setActiveIndex(api.selectedScrollSnap())
 
     api.on("select", () => {
@@ -133,17 +101,17 @@ export function MediaCarousel({ media }: MediaCarouselProps) {
     <div className="w-full max-w-5xl mx-auto px-16 mb-24" aria-label="Project media gallery">
       <Carousel
         setApi={setApi}
-        plugins={[plugin.current]}
+        plugins={[plugin]}
         className="relative w-full"
-        onMouseEnter={() => plugin.current.stop()}
-        onMouseLeave={() => plugin.current.play()}
+        onMouseEnter={() => plugin.stop()}
+        onMouseLeave={() => plugin.play()}
       >
         <div className="relative rounded-xl overflow-hidden aspect-video border border-surface-variant bg-surface-container-low">
           <CarouselContent>
             {media.map((item) => (
               <CarouselItem key={item.id}>
                 {item.type === "video" ? (
-                  <CarouselVideo item={item} plugin={plugin} />
+                  <CarouselVideo item={item} />
                 ) : (
                   <Dialog>
                     <DialogTrigger asChild>

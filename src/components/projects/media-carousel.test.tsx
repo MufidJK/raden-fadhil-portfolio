@@ -4,10 +4,11 @@ import type { ProjectMedia } from "@/lib/data/projects"
 
 // Mock next/image to render a standard <img> tag for testing
 jest.mock("next/image", () => {
-  function MockImage(props: Record<string, unknown>) {
-    // next/image uses `fill` as a boolean prop; spread remaining props onto <img>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function MockImage(props: Record<string, any>) {
     const { fill, priority, ...rest } = props
-    return <img data-fill={fill ? "true" : undefined} data-priority={priority ? "true" : undefined} {...rest} />
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img data-fill={fill ? "true" : undefined} data-priority={priority ? "true" : undefined} alt="" {...rest} />
   }
   MockImage.displayName = "MockImage"
   return { __esModule: true, default: MockImage }

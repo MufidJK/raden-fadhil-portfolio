@@ -10,9 +10,11 @@ jest.mock("next/navigation", () => ({
 }))
 
 jest.mock("next/image", () => {
-  function MockImage(props: Record<string, unknown>) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function MockImage(props: Record<string, any>) {
     const { fill, priority, ...rest } = props
-    return <img data-fill={fill ? "true" : undefined} data-priority={priority ? "true" : undefined} {...rest} />
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img data-fill={fill ? "true" : undefined} data-priority={priority ? "true" : undefined} alt="" {...rest} />
   }
   MockImage.displayName = "MockImage"
   return { __esModule: true, default: MockImage }

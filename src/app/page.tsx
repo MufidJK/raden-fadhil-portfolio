@@ -4,7 +4,7 @@ import { HeroSection } from "@/components/hero-section"
 import { HardwareCapabilities } from "@/components/hardware-capabilities"
 import { ThemeSyncWidget } from "@/components/dashboard/theme-sync-widget"
 import { ProjectsGrid } from "@/components/projects/projects-grid"
-import { ContactForm } from "@/components/contact-form"
+import { ContactSection } from "@/components/contact-section"
 import { SiteFooter } from "@/components/site-footer"
 import TelemetryWidget from "@/components/dashboard/telemetry-widget-loader"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
@@ -51,23 +51,9 @@ export default function Home() {
         </ScrollReveal>
 
         {/* SECTION 6: Contact & Footer */}
+        {/* SECTION 6: Contact Section */}
         <ScrollReveal>
-          <section id="contact" className="container mx-auto max-w-container-max px-4 sm:px-6 lg:px-8 py-12">
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-               <div>
-                 <h2 className="text-2xl md:text-3xl font-bold font-sans tracking-tight text-foreground mb-4">
-                   Let's Connect
-                 </h2>
-                 <p className="text-muted-foreground mb-6 font-jetbrains">
-                   Interested in low-latency systems, IoT integrations, or modern web architectures? Let's build something together.
-                 </p>
-                 <a href="/cv.pdf" download className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                   Download CV
-                 </a>
-               </div>
-               <ContactForm />
-             </div>
-          </section>
+          <ContactSection />
         </ScrollReveal>
 
       </main>

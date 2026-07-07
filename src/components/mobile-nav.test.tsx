@@ -3,13 +3,15 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { MobileNav } from './mobile-nav'
 
 jest.mock('next/link', () => {
-  return ({ children, href, onClick, className }: any) => {
+  const MockLink = ({ children, href, onClick, className }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
     return (
       <a href={href} onClick={onClick} className={className} data-testid="mock-link">
         {children}
       </a>
     )
   }
+  MockLink.displayName = 'MockLink'
+  return MockLink
 })
 
 describe('MobileNav Component', () => {
