@@ -1,6 +1,6 @@
 import * as React from "react"
 import Image from "next/image"
-import { Mail, Download } from "lucide-react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
 
@@ -40,12 +40,12 @@ export function HeroSection() {
             Architecting robust physical-digital bridges. Specializing in low-latency telemetry, embedded systems, and scalable IoT infrastructures. I build hardware that thinks and software that acts.
           </p>
 
-          <div className="flex flex-wrap items-center gap-4 mt-2">
-            <Button className="gap-2 font-medium">
-              Contact Me <Mail className="w-4 h-4" />
+          <div className="flex flex-col md:flex-row w-full sm:w-auto items-stretch sm:items-center gap-4 mt-2">
+            <Button asChild className="w-full sm:w-auto font-medium">
+              <Link href="#projects">View Projects</Link>
             </Button>
-            <Button variant="outline" className="gap-2 font-medium">
-              Resume <Download className="w-4 h-4" />
+            <Button asChild variant="outline" className="w-full sm:w-auto font-medium">
+              <Link href="#contact">Contact Me</Link>
             </Button>
           </div>
         </ScrollReveal>

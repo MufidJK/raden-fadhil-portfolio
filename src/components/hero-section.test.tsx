@@ -13,10 +13,10 @@ describe("HeroSection", () => {
     expect(screen.getByText(/Architecting robust physical-digital bridges/i)).toBeInTheDocument()
   })
 
-  it("renders the action buttons", () => {
+  it("renders the anchor link CTAs", () => {
     render(<HeroSection />)
-    expect(screen.getByRole("button", { name: /contact me/i })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: /resume/i })).toBeInTheDocument()
+    expect(screen.getByRole("link", { name: /view projects/i })).toHaveAttribute("href", "#projects")
+    expect(screen.getByRole("link", { name: /contact me/i })).toHaveAttribute("href", "#contact")
   })
 
   it("renders the profile image", () => {
