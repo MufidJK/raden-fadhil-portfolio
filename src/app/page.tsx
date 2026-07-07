@@ -1,10 +1,9 @@
 import * as React from "react"
 import { TopNavBar } from "@/components/top-nav-bar"
 import { HeroSection } from "@/components/hero-section"
-import { TechStack } from "@/components/tech-stack"
+import { HardwareCapabilities } from "@/components/hardware-capabilities"
 import { ThemeSyncWidget } from "@/components/dashboard/theme-sync-widget"
 import { ProjectsGrid } from "@/components/projects/projects-grid"
-import { AboutMe } from "@/components/about-me"
 import { ContactForm } from "@/components/contact-form"
 import { SiteFooter } from "@/components/site-footer"
 import TelemetryWidget from "@/components/dashboard/telemetry-widget-loader"
@@ -19,9 +18,9 @@ export default function Home() {
         {/* SECTION 1: Hero Section */}
         <HeroSection />
         
-        {/* SECTION 2: Tech Stack */}
+        {/* SECTION 2: Hardware Capabilities */}
         <ScrollReveal>
-          <TechStack />
+          <HardwareCapabilities />
         </ScrollReveal>
         
         {/* SECTION 3: System Dashboard */}
@@ -43,11 +42,7 @@ export default function Home() {
           </section>
         </ScrollReveal>
 
-        {/* SECTION 4: About Me */}
-        <ScrollReveal>
-          <AboutMe />
-        </ScrollReveal>
-        
+
         {/* SECTION 5: Architecture & Builds */}
         <ScrollReveal>
           <section id="projects" className="py-12">
