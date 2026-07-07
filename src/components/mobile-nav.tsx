@@ -34,28 +34,28 @@ export function MobileNav() {
           >
             <nav className="flex flex-col">
               <Link
-                href="#projects"
-                onClick={handleLinkClick}
-                className="py-4 px-6 text-lg font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
-              >
-                Projects
-              </Link>
-              <Link
-                href="#skills"
+                href="/#about"
                 onClick={handleLinkClick}
                 className="py-4 px-6 text-lg font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
               >
                 Skills
               </Link>
               <Link
-                href="#dashboard"
+                href="/#dashboard"
                 onClick={handleLinkClick}
                 className="py-4 px-6 text-lg font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
               >
                 Dashboard
               </Link>
               <Link
-                href="#contact"
+                href="/#projects"
+                onClick={handleLinkClick}
+                className="py-4 px-6 text-lg font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+              >
+                Projects
+              </Link>
+              <Link
+                href="/#contact"
                 onClick={handleLinkClick}
                 className="py-4 px-6 text-lg font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
               >

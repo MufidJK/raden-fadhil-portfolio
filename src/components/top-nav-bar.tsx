@@ -15,16 +15,16 @@ export function TopNavBar() {
         </div>
         
         <nav className="hidden md:flex items-center gap-6">
-          <Link href="#projects" className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-emerald-500 after:transition-transform hover:after:scale-x-100">
-            Projects
-          </Link>
-          <Link href="#skills" className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-emerald-500 after:transition-transform hover:after:scale-x-100">
+          <Link href="/#about" className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-emerald-500 after:transition-transform hover:after:scale-x-100">
             Skills
           </Link>
-          <Link href="#dashboard" className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-emerald-500 after:transition-transform hover:after:scale-x-100">
+          <Link href="/#dashboard" className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-emerald-500 after:transition-transform hover:after:scale-x-100">
             Dashboard
           </Link>
-          <Link href="#contact" className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-emerald-500 after:transition-transform hover:after:scale-x-100">
+          <Link href="/#projects" className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-emerald-500 after:transition-transform hover:after:scale-x-100">
+            Projects
+          </Link>
+          <Link href="/#contact" className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-emerald-500 after:transition-transform hover:after:scale-x-100">
             Contact
           </Link>
         </nav>
