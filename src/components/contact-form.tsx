@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Loader2 } from "lucide-react"
+import { toast } from "sonner"
 import {
   Form,
   FormControl,
@@ -44,6 +45,9 @@ export function ContactForm() {
     await new Promise((resolve) => setTimeout(resolve, 1500))
     console.log("Form Submitted:", data)
     setIsSubmitting(false)
+    toast("Message Sent!", {
+      description: "Thanks for reaching out. I'll get back to you soon.",
+    })
     form.reset()
   }
 
@@ -56,9 +60,9 @@ export function ContactForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Full Name</FormLabel>
+                <FormLabel>Full Name <span className="text-destructive">*</span></FormLabel>
                 <FormControl>
-                  <Input placeholder="John Doe" disabled={isSubmitting} {...field} />
+                  <Input className="placeholder:text-muted-foreground/70" placeholder="John Doe" disabled={isSubmitting} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -70,9 +74,9 @@ export function ContactForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email Address</FormLabel>
+                <FormLabel>Email Address <span className="text-destructive">*</span></FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="john@example.com" disabled={isSubmitting} {...field} />
+                  <Input className="placeholder:text-muted-foreground/70" type="email" placeholder="john@example.com" disabled={isSubmitting} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -84,9 +88,9 @@ export function ContactForm() {
             name="subject"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Subject</FormLabel>
+                <FormLabel>Subject <span className="text-destructive">*</span></FormLabel>
                 <FormControl>
-                  <Input placeholder="Project Inquiry" disabled={isSubmitting} {...field} />
+                  <Input className="placeholder:text-muted-foreground/70" placeholder="Project Inquiry" disabled={isSubmitting} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -98,11 +102,11 @@ export function ContactForm() {
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Message</FormLabel>
+                <FormLabel>Message <span className="text-destructive">*</span></FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="How can I help you?"
-                    className="min-h-[140px] resize-y"
+                    className="min-h-[140px] resize-y placeholder:text-muted-foreground/70"
                     disabled={isSubmitting}
                     {...field}
                   />
@@ -112,7 +116,11 @@ export function ContactForm() {
             )}
           />
 
-          <Button type="submit" disabled={isSubmitting} className="w-full h-11 text-base">
+          <Button 
+            type="submit" 
+            disabled={isSubmitting} 
+            className="w-full h-11 text-base dark:bg-white dark:text-black dark:hover:bg-gray-200 font-semibold transition-colors"
+          >
             {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {isSubmitting ? "Sending..." : "Send Message"}
           </Button>
