@@ -15,7 +15,7 @@ export function FilterTabs({ tabs, activeTab, onTabChange }: FilterTabsProps) {
         <button
           key={tab}
           onClick={() => onTabChange(tab)}
-          className={`px-3 py-1 text-sm font-medium font-jetbrains rounded-md transition-colors ${
+          className={`px-3 py-1 text-sm font-medium font-jetbrains rounded-md whitespace-nowrap transition-colors ${
             activeTab === tab
               ? "bg-primary text-primary-foreground"
               : "bg-surface-variant/30 text-muted-foreground hover:text-foreground hover:bg-surface-variant/60"
