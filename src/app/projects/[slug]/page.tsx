@@ -58,29 +58,21 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         <MediaCarousel media={project.media} />
 
         {/* Hardware Specs Section */}
-        <section className="flex flex-col gap-6">
-          <h2 className="text-2xl font-bold font-sans tracking-tight text-foreground">
-            Technical Specifications
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card className="p-6 bg-surface-container-low border-surface-variant">
-              <p className="font-jetbrains text-xs text-muted-foreground uppercase tracking-wider mb-2">Microcontroller</p>
-              <p className="font-sans font-medium text-foreground">ESP32-S3 WROOM</p>
-            </Card>
-            <Card className="p-6 bg-surface-container-low border-surface-variant">
-              <p className="font-jetbrains text-xs text-muted-foreground uppercase tracking-wider mb-2">Connectivity</p>
-              <p className="font-sans font-medium text-foreground">LoRaWAN 915MHz</p>
-            </Card>
-            <Card className="p-6 bg-surface-container-low border-surface-variant">
-              <p className="font-jetbrains text-xs text-muted-foreground uppercase tracking-wider mb-2">Power Draw</p>
-              <p className="font-sans font-medium text-foreground">150mA / 10uA Sleep</p>
-            </Card>
-            <Card className="p-6 bg-surface-container-low border-surface-variant">
-              <p className="font-jetbrains text-xs text-muted-foreground uppercase tracking-wider mb-2">Protocol</p>
-              <p className="font-sans font-medium text-foreground">MQTT v5.0</p>
-            </Card>
-          </div>
-        </section>
+        {project.technicalSpecs && project.technicalSpecs.length > 0 && (
+          <section className="flex flex-col gap-6 w-full">
+            <h2 className="text-2xl font-bold font-sans tracking-tight text-foreground">
+              Technical Specifications
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+              {project.technicalSpecs.slice(0, 8).map((spec, index) => (
+                <Card key={index} className="p-6 bg-surface-container-low border-surface-variant w-full">
+                  <p className="font-jetbrains text-xs text-muted-foreground uppercase tracking-wider mb-2">{spec.label}</p>
+                  <p className="font-sans font-medium text-foreground">{spec.value}</p>
+                </Card>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
       <SiteFooter />
     </div>

@@ -14,6 +14,7 @@ export interface Project {
   category: string;
   link: string;
   size?: "small" | "medium" | "wide";
+  technicalSpecs: { label: string; value: string }[];
   media: ProjectMedia[];
 }
 
@@ -26,6 +27,16 @@ export const mockProjects: Project[] = [
     category: "Reptile IoT",
     link: "/projects/reptile-node-v2",
     size: "wide",
+    technicalSpecs: [
+      { label: "Microcontroller", value: "Dual ESP32-S3" },
+      { label: "Networking", value: "LoRa 915MHz" },
+      { label: "Sensor", value: "SHT40 (±1.8% RH)" },
+      { label: "Actuator Control", value: "4-Channel PWM" },
+      { label: "Power Draw", value: "1.2W Avg" },
+      { label: "Protocol", value: "MQTT + TLS" },
+      { label: "Loop Frequency", value: "10Hz PID" },
+      { label: "Operating Temp", value: "0-50°C" }
+    ],
     media: [
       {
         id: "REPTILE_NODE_V2_M1",
@@ -69,6 +80,13 @@ export const mockProjects: Project[] = [
     category: "Robotics",
     link: "/projects/hexapod-gait-engine",
     size: "medium",
+    technicalSpecs: [
+      { label: "Servos", value: "18x 35kg Digital" },
+      { label: "Degrees of Freedom", value: "18-DOF" },
+      { label: "Battery", value: "4S 5000mAh LiPo" },
+      { label: "Kinematics", value: "Inverse / Custom" },
+      { label: "Payload", value: "2.5kg Max" }
+    ],
     media: [
       {
         id: "HEX_GAIT_01_M1",
@@ -105,6 +123,12 @@ export const mockProjects: Project[] = [
     category: "Automation",
     link: "/projects/smart-power-rack",
     size: "medium",
+    technicalSpecs: [
+      { label: "Max Current", value: "32A Total" },
+      { label: "Relays", value: "12x Solid State" },
+      { label: "Switching Freq", value: "50/60Hz Sync" },
+      { label: "Safety Protocol", value: "Hardware OCP" }
+    ],
     media: [
       {
         id: "PWR_RACK_M1",
@@ -141,6 +165,12 @@ export const mockProjects: Project[] = [
     category: "Web App",
     link: "/projects/homelab-dashboard",
     size: "wide",
+    technicalSpecs: [
+      { label: "Ingest Rate", value: "5000 msg/sec" },
+      { label: "Telemetry", value: "Proxmox + IPMI" },
+      { label: "Latency", value: "<15ms Glass-to-Glass" },
+      { label: "Display Node", value: "Raspberry Pi 4" }
+    ],
     media: [
       {
         id: "LAB_DASH_M1",
@@ -183,6 +213,12 @@ export const mockProjects: Project[] = [
     category: "Edge AI",
     link: "/projects/tensor-vision-node",
     size: "wide",
+    technicalSpecs: [
+      { label: "Accelerator", value: "Coral Edge TPU" },
+      { label: "Interface", value: "M.2 Key E / PCIe" },
+      { label: "Inference Speed", value: "4 TOPS (Int8)" },
+      { label: "Vision Sensor", value: "OV2640" }
+    ],
     media: [
       {
         id: "EDGE_AI_VISION_M1",
@@ -225,6 +261,12 @@ export const mockProjects: Project[] = [
     category: "IoT Network",
     link: "/projects/autonomous-lorawan-gateway",
     size: "medium",
+    technicalSpecs: [
+      { label: "Antenna Gain", value: "5.8 dBi Omni" },
+      { label: "Range", value: "15km (Line of Sight)" },
+      { label: "Power Source", value: "20W Solar Panel" },
+      { label: "Deep-Sleep Draw", value: "12μA Mode" }
+    ],
     media: [
       {
         id: "LORA_GATEWAY_SOLAR_M1",
@@ -255,6 +297,12 @@ export const mockProjects: Project[] = [
     category: "Robotics",
     link: "/projects/uav-telemetry-link",
     size: "medium",
+    technicalSpecs: [
+      { label: "RF Module", value: "CC1200 Transceiver" },
+      { label: "Data Rate", value: "500kbps GFSK" },
+      { label: "Refresh Rate", value: "500Hz Update" },
+      { label: "Antenna", value: "SMA Dipole" }
+    ],
     media: [
       {
         id: "UAV_TELEMETRY_M1",
@@ -291,6 +339,12 @@ export const mockProjects: Project[] = [
     category: "Signal Processing",
     link: "/projects/fpga-sdr",
     size: "wide",
+    technicalSpecs: [
+      { label: "Logic Gates", value: "iCE40HX8K" },
+      { label: "ADC Sampling", value: "65 MSPS" },
+      { label: "DSP Blocks", value: "Custom FIR Filter" },
+      { label: "Frequency", value: "2.4GHz ISM Band" }
+    ],
     media: [
       {
         id: "FPGA_SDR_M1",

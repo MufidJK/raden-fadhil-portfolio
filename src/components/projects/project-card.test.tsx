@@ -10,14 +10,7 @@ describe("ProjectCard", () => {
     category: "Robotics",
     link: "/projects/test-project",
     size: "wide" as const,
-    media: [
-      {
-        id: "test-media-1",
-        type: "image" as const,
-        url: "/test-image.jpg",
-        alt: "Test image",
-      },
-    ],
+    media: [], technicalSpecs: [],
   }
 
   it("renders the project title and description", () => {
