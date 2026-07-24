@@ -62,7 +62,7 @@ export function ContactForm() {
               <FormItem>
                 <FormLabel>Full Name <span className="text-destructive">*</span></FormLabel>
                 <FormControl>
-                  <Input className="placeholder:text-muted-foreground/70" placeholder="John Doe" disabled={isSubmitting} {...field} />
+                  <Input className="placeholder:text-muted-foreground/70" placeholder="e.g. Sarah Jenkins" disabled={isSubmitting} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -76,7 +76,7 @@ export function ContactForm() {
               <FormItem>
                 <FormLabel>Email Address <span className="text-destructive">*</span></FormLabel>
                 <FormControl>
-                  <Input className="placeholder:text-muted-foreground/70" type="email" placeholder="john@example.com" disabled={isSubmitting} {...field} />
+                  <Input className="placeholder:text-muted-foreground/70" type="email" placeholder="sarah@techcorp.io" disabled={isSubmitting} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -90,7 +90,7 @@ export function ContactForm() {
               <FormItem>
                 <FormLabel>Subject <span className="text-destructive">*</span></FormLabel>
                 <FormControl>
-                  <Input className="placeholder:text-muted-foreground/70" placeholder="Project Inquiry" disabled={isSubmitting} {...field} />
+                  <Input className="placeholder:text-muted-foreground/70" placeholder="e.g. Custom PCB Layout & LoRaWAN Project" disabled={isSubmitting} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -105,7 +105,7 @@ export function ContactForm() {
                 <FormLabel>Message <span className="text-destructive">*</span></FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="How can I help you?"
+                    placeholder="Briefly describe your hardware requirements, target microcontrollers, or telemetry scope..."
                     className="min-h-[140px] resize-y placeholder:text-muted-foreground/70"
                     disabled={isSubmitting}
                     {...field}
