@@ -106,7 +106,7 @@ export function ContactForm() {
                 <FormControl>
                   <Textarea
                     placeholder="Briefly describe your hardware requirements, target microcontrollers, or telemetry scope..."
-                    className="min-h-[140px] resize-y placeholder:text-muted-foreground/70"
+                    className="min-h-35 resize-y placeholder:text-muted-foreground/70"
                     disabled={isSubmitting}
                     {...field}
                   />
