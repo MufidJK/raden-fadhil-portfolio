@@ -1,3 +1,5 @@
+import { supabase } from "@/lib/supabase"
+
 export interface ProjectMedia {
   id: string;
   type: "image" | "video";
@@ -18,7 +20,82 @@ export interface Project {
   media: ProjectMedia[];
 }
 
-export const mockProjects: Project[] = [
+/**
+ * Raw row shape from the Supabase `projects` table.
+ */
+export interface SupabaseProject {
+  id: string;
+  title: string;
+  slug: string;
+  description: string | null;
+  technical_specs: Record<string, string> | null;
+  created_at: string | null;
+  updated_at: string | null;
+  category: string | null;
+  tech_stack: string[] | null;
+}
+
+/**
+ * Transforms a raw Supabase row into the UI-facing `Project` shape.
+ */
+export function mapSupabaseProject(
+  row: SupabaseProject,
+  index: number,
+  totalCount: number
+): Project {
+  const specs = row.technical_specs ?? {};
+  const technicalSpecs: { label: string; value: string }[] = Object.entries(
+    specs
+  ).map(([label, value]) => ({ label, value }));
+
+  // First and last projects get "wide" layout, others get "medium"
+  const isEdge = index === 0 || index === totalCount - 1;
+  const size: "wide" | "medium" = isEdge ? "wide" : "medium";
+
+  return {
+    id: row.slug.toUpperCase().replace(/-/g, "_"),
+    title: row.title,
+    description: row.description ?? "",
+    tags: row.tech_stack ?? [],
+    category: row.category ?? "Uncategorized",
+    link: `/projects/${row.slug}`,
+    size,
+    technicalSpecs,
+    media: [],
+  };
+}
+
+/**
+ * Fetches all projects from Supabase, ordered by `created_at` descending.
+ * Returns an empty array on error so the caller can fall back to static data.
+ */
+export async function fetchProjects(): Promise<Project[]> {
+  try {
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("[fetchProjects] Supabase query failed:", error.message);
+      return [];
+    }
+
+    if (!data || data.length === 0) {
+      return [];
+    }
+
+    return (data as SupabaseProject[]).map((row, idx) =>
+      mapSupabaseProject(row, idx, data.length)
+    );
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[fetchProjects] Unexpected error:", message);
+    return [];
+  }
+}
+
+export const fallbackProjects: Project[] = [
   {
     id: "REPTILE_NODE_V2",
     title: "Terrarium Climate Controller v2",
@@ -380,3 +457,6 @@ export const mockProjects: Project[] = [
     ],
   },
 ];
+
+/** @deprecated Use `fallbackProjects` instead. Kept for backward compatibility. */
+export const mockProjects = fallbackProjects;
