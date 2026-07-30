@@ -17,27 +17,45 @@ function generateRandom(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-export default function TelemetryWidget() {
-  const [coreTemp, setCoreTemp] = React.useState<Metric>({
+export interface TelemetryWidgetProps {
+  /** Initial Core Temp in °C. Seeded from Supabase; defaults to 74. */
+  initialCoreTemp?: number
+  /** Initial Voltage In in V. Seeded from Supabase; defaults to 5.00. */
+  initialVoltageIn?: number
+  /** Initial CPU Load in %. Seeded from Supabase; defaults to 28. */
+  initialCpuLoad?: number
+}
+
+export default function TelemetryWidget({
+  initialCoreTemp = 74,
+  initialVoltageIn = 5.0,
+  initialCpuLoad = 28,
+}: TelemetryWidgetProps) {
+  const [coreTemp, setCoreTemp] = React.useState<Metric>(() => ({
     label: "CORE TEMP",
-    value: "42°C",
+    value: `${initialCoreTemp}°C`,
     history: Array.from({ length: MAX_HISTORY }, () => generateRandom(30, 90)),
-    colorClass: "bg-emerald-500", // Will be dynamic based on value
-  })
+    colorClass:
+      initialCoreTemp > 75
+        ? "bg-red-500"
+        : initialCoreTemp > 60
+          ? "bg-yellow-500"
+          : "bg-emerald-500",
+  }))
   
-  const [voltageIn, setVoltageIn] = React.useState<Metric>({
+  const [voltageIn, setVoltageIn] = React.useState<Metric>(() => ({
     label: "VOLTAGE IN",
-    value: "5.02V",
+    value: `${initialVoltageIn.toFixed(2)}V`,
     history: Array.from({ length: MAX_HISTORY }, () => generateRandom(78, 85)),
     colorClass: "bg-blue-500",
-  })
+  }))
   
-  const [cpuLoad, setCpuLoad] = React.useState<Metric>({
+  const [cpuLoad, setCpuLoad] = React.useState<Metric>(() => ({
     label: "CPU LOAD",
-    value: "28%",
+    value: `${initialCpuLoad}%`,
     history: Array.from({ length: MAX_HISTORY }, () => generateRandom(15, 40)),
     colorClass: "bg-purple-500",
-  })
+  }))
 
   React.useEffect(() => {
     const interval = setInterval(() => {

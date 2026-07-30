@@ -6,7 +6,7 @@ import { ThemeSyncWidget } from "@/components/dashboard/theme-sync-widget"
 import { ProjectsGrid } from "@/components/projects/projects-grid"
 import { ContactSection } from "@/components/contact-section"
 import { SiteFooter } from "@/components/site-footer"
-import TelemetryWidget from "@/components/dashboard/telemetry-widget-loader"
+import TelemetryWidget from "@/components/dashboard/telemetry-widget-server"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
 
 export default function Home() {

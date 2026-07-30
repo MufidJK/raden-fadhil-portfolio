@@ -1,6 +1,7 @@
 "use client"
 
 import dynamic from "next/dynamic"
+import type { TelemetryWidgetProps } from "./telemetry-widget"
 
 /**
  * Client-side wrapper that lazily loads TelemetryWidget with SSR disabled.
@@ -20,4 +21,7 @@ const TelemetryWidget = dynamic(
   }
 )
 
-export default TelemetryWidget
+export default function TelemetryWidgetLoader(props: TelemetryWidgetProps) {
+  return <TelemetryWidget {...props} />
+}
+

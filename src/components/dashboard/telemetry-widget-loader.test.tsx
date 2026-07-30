@@ -1,5 +1,17 @@
 import { render, screen, act } from "@testing-library/react"
 
+// Prevent supabase.ts env-var check from throwing when the dynamic import
+// resolves and transitively pulls in telemetry-widget-server.tsx
+jest.mock("@/lib/supabase", () => ({
+  supabase: {
+    from: jest.fn(() => ({
+      select: jest.fn().mockResolvedValue({ data: [], error: null }),
+    })),
+  },
+}))
+
+
+
 // Mock next/dynamic to first render the loading fallback, then the real component
 jest.mock("next/dynamic", () => {
   return function mockDynamic(
