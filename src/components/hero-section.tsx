@@ -13,7 +13,7 @@ export function HeroSection() {
             {/* AI IMAGE GENERATION PROMPT: A highly cinematic, photorealistic portrait of an elite hardware engineer, cyberpunk and modern IoT aesthetic, dark theme, sleek workspace with blurred circuit boards and glowing telemetry screens in the background, dramatic lighting, 8k, highly detailed. */}
             {/* TODO: Ensure /profile.webp exists in the /public directory. Using placeholder URL temporarily. */}
             <Image
-              src="https://github.com/shadcn.png"
+              src="/raden-fadhil-profile.jpg"
               alt="Raden Fadhil Triansyah"
               fill
               className="object-cover"

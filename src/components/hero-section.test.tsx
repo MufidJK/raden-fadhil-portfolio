@@ -21,6 +21,8 @@ describe("HeroSection", () => {
 
   it("renders the profile image", () => {
     render(<HeroSection />)
-    expect(screen.getByRole("img", { name: /raden fadhil triansyah/i })).toBeInTheDocument()
+    const img = screen.getByRole("img", { name: /raden fadhil triansyah/i })
+    expect(img).toBeInTheDocument()
+    expect(img).toHaveAttribute("src", "/raden-fadhil-profile.jpg")
   })
 })
