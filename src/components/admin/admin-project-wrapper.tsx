@@ -577,7 +577,7 @@ export function AdminProjectWrapper({ project }: { project: AdminProjectData }) 
 
                         {/* Edit mode: Caption input (always visible) */}
                         {isEditMode ? (
-                          <div className="absolute bottom-0 left-0 right-0 z-20 p-3 bg-gradient-to-t from-black/80 via-black/50 to-transparent">
+                          <div className="absolute bottom-0 left-0 right-0 z-20 p-3 bg-linear-to-t from-black/80 via-black/50 to-transparent">
                             <input
                               type="text"
                               value={item.caption}
@@ -597,7 +597,7 @@ export function AdminProjectWrapper({ project }: { project: AdminProjectData }) 
                         ) : (
                           /* Read-only mode: Caption display */
                           item.caption && (
-                            <div className="absolute bottom-0 left-0 right-0 z-10 p-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none">
+                            <div className="absolute bottom-0 left-0 right-0 z-10 p-3 bg-linear-to-t from-black/80 via-black/40 to-transparent pointer-events-none">
                               <p className="text-xs sm:text-sm font-jetbrains text-white/90 text-center drop-shadow">
                                 {item.caption}
                               </p>

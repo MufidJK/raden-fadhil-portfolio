@@ -19,7 +19,7 @@ export function AdminFloatingBar({
   onSave,
 }: AdminFloatingBarProps) {
   return (
-    <div className="fixed bottom-6 left-0 right-0 mx-auto w-max z-[99999] pointer-events-none">
+    <div className="fixed bottom-6 left-0 right-0 mx-auto w-max z-99999 pointer-events-none">
       <aside
         role="toolbar"
         aria-label="Admin actions"
