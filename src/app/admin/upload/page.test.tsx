@@ -20,6 +20,9 @@ jest.mock("@/lib/supabase", () => ({
           single: jest.fn(() => Promise.resolve({ data: { id: "mock-uuid" }, error: null })),
         })),
       })),
+      select: jest.fn(() =>
+        Promise.resolve({ count: 2, error: null })
+      ),
     })),
     storage: {
       from: jest.fn(() => ({
@@ -82,7 +85,12 @@ describe("AdminPortfolioUploadPage Unit & Integration Tests", () => {
 
   it("shows validation error messages when submitting empty form", async () => {
     render(<AdminPortfolioUploadPage />)
-    
+
+    // Wait for the count fetch to complete (fieldset becomes enabled)
+    await waitFor(() => {
+      expect(screen.getByText(/Slot Terisi/)).toBeInTheDocument()
+    })
+
     const submitButton = screen.getByRole("button", { name: /Publish Portfolio Project/i })
     fireEvent.click(submitButton)
 

@@ -21,6 +21,20 @@ export interface Project {
 }
 
 /**
+ * Raw row shape from the Supabase `project_media` table.
+ * Mirrors the MCP-verified schema exactly.
+ */
+export interface ProjectMediaRow {
+  id: string;
+  project_id: string | null;
+  media_url: string;
+  media_type: "image" | "video" | null;
+  caption: string | null;
+  sort_order: number | null;
+  created_at: string | null;
+}
+
+/**
  * Raw row shape from the Supabase `projects` table.
  */
 export interface SupabaseProject {
@@ -33,6 +47,13 @@ export interface SupabaseProject {
   updated_at: string | null;
   category: string | null;
   tech_stack: string[] | null;
+}
+
+/**
+ * Extended project row with nested media (from .select("*, project_media(*)")).
+ */
+export interface SupabaseProjectWithMedia extends SupabaseProject {
+  project_media: ProjectMediaRow[];
 }
 
 /**
@@ -74,7 +95,8 @@ export async function fetchProjects(): Promise<Project[]> {
     const { data, error } = await supabase
       .from("projects")
       .select("*")
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .limit(8);
 
     if (error) {
       console.error("[fetchProjects] Supabase query failed:", error.message);
@@ -92,6 +114,29 @@ export async function fetchProjects(): Promise<Project[]> {
     const message = err instanceof Error ? err.message : String(err);
     console.error("[fetchProjects] Unexpected error:", message);
     return [];
+  }
+}
+
+/**
+ * Returns the total count of projects in the database.
+ * Used by the upload page to enforce the 8-project limit.
+ */
+export async function fetchProjectCount(): Promise<number> {
+  try {
+    const { count, error } = await supabase
+      .from("projects")
+      .select("*", { count: "exact", head: true });
+
+    if (error) {
+      console.error("[fetchProjectCount] Supabase query failed:", error.message);
+      return 0;
+    }
+
+    return count ?? 0;
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[fetchProjectCount] Unexpected error:", message);
+    return 0;
   }
 }
 

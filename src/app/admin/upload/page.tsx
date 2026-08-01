@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useState, useCallback, ChangeEvent, FormEvent } from "react"
+import { useState, useCallback, useEffect, ChangeEvent, FormEvent } from "react"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import {
@@ -19,7 +19,8 @@ import {
   Layers,
   Sparkles,
   ArrowRight,
-  Info
+  Info,
+  ShieldAlert
 } from "lucide-react"
 import { toast } from "sonner"
 import { z } from "zod"
@@ -103,6 +104,50 @@ export default function AdminPortfolioUploadPage() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [submitSuccess, setSubmitSuccess] = useState<boolean>(false)
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({})
+
+  // ── 8-project limit enforcement ──
+  const MAX_PROJECTS = 8
+  const [projectCount, setProjectCount] = useState<number | null>(null)
+  const [isLoadingCount, setIsLoadingCount] = useState<boolean>(true)
+  const isSlotFull = projectCount !== null && projectCount >= MAX_PROJECTS
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function checkSlotCount() {
+      setIsLoadingCount(true)
+      try {
+        const { count, error } = await supabase
+          .from("projects")
+          .select("*", { count: "exact", head: true })
+
+        if (!cancelled) {
+          if (error) {
+            console.error("[UploadPage] Failed to fetch project count:", error.message)
+            setProjectCount(0)
+          } else {
+            setProjectCount(count ?? 0)
+          }
+        }
+      } catch (err: unknown) {
+        if (!cancelled) {
+          const msg = err instanceof Error ? err.message : String(err)
+          console.error("[UploadPage] Unexpected error fetching count:", msg)
+          setProjectCount(0)
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoadingCount(false)
+        }
+      }
+    }
+
+    checkSlotCount()
+
+    return () => {
+      cancelled = true
+    }
+  }, [submitSuccess])
 
   // Handle Title change & automatic slug formatting
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -387,10 +432,37 @@ export default function AdminPortfolioUploadPage() {
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 font-sans">
             Upload Portfolio Project
           </h1>
-          <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 max-w-2xl">
-            Configure project specifications, hardware telemetry parameters, and media assets for publication to the portfolio catalog.
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 max-w-2xl">
+              Configure project specifications, hardware telemetry parameters, and media assets for publication to the portfolio catalog.
+            </p>
+            {/* Slot Counter Badge */}
+            {!isLoadingCount && projectCount !== null && (
+              <span
+                className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold font-mono ${
+                  isSlotFull
+                    ? "bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/30"
+                    : "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20"
+                }`}
+              >
+                {projectCount}/{MAX_PROJECTS} Slot Terisi
+              </span>
+            )}
+          </div>
         </header>
+
+        {/* 8-Project Limit Warning Banner */}
+        {isSlotFull && (
+          <div className="mb-8 p-5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-800 dark:text-red-200 flex items-start gap-3 animate-in fade-in slide-in-from-top-2">
+            <ShieldAlert className="w-6 h-6 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
+            <div>
+              <h4 className="font-bold text-base">Slot Portofolio Penuh ({MAX_PROJECTS}/{MAX_PROJECTS})</h4>
+              <p className="text-sm text-red-700 dark:text-red-300 mt-1">
+                Hapus project lama terlebih dahulu untuk menambah project baru.
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Success Alert Banner */}
         {submitSuccess && (
@@ -406,6 +478,7 @@ export default function AdminPortfolioUploadPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-10">
+          <fieldset disabled={isSlotFull || isLoadingCount} className="space-y-10">
           {/* SECTION 1: BASIC INFO */}
           <section className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm space-y-6">
             <div className="flex items-center gap-3 pb-4 border-b border-zinc-200 dark:border-zinc-800">
@@ -805,7 +878,7 @@ export default function AdminPortfolioUploadPage() {
 
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isSlotFull}
               className="w-full sm:w-auto px-8 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-semibold text-sm transition-all shadow-md shadow-emerald-600/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
             >
               {isSubmitting ? (
@@ -821,6 +894,7 @@ export default function AdminPortfolioUploadPage() {
               )}
             </button>
           </div>
+          </fieldset>
         </form>
       </main>
 
