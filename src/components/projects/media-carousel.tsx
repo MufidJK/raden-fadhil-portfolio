@@ -98,7 +98,7 @@ export function MediaCarousel({ media }: MediaCarouselProps) {
   const activeItem = media[activeIndex]
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-16 mb-24" aria-label="Project media gallery">
+    <div className="w-full max-w-5xl mx-auto px-0 sm:px-16 mb-24" aria-label="Project media gallery">
       <Carousel
         setApi={setApi}
         plugins={[plugin]}
@@ -150,8 +150,8 @@ export function MediaCarousel({ media }: MediaCarouselProps) {
           
         {totalSlides > 1 && (
           <>
-            <CarouselPrevious className="absolute -left-12 top-1/2 -translate-y-1/2 z-10 bg-black/50 backdrop-blur-sm border-0 text-white/80 hover:bg-black/70 hover:text-white" />
-            <CarouselNext className="absolute -right-12 top-1/2 -translate-y-1/2 z-10 bg-black/50 backdrop-blur-sm border-0 text-white/80 hover:bg-black/70 hover:text-white" />
+            <CarouselPrevious className="max-sm:hidden absolute -left-12 top-1/2 -translate-y-1/2 z-10 bg-black/50 backdrop-blur-sm border-0 text-white/80 hover:bg-black/70 hover:text-white" />
+            <CarouselNext className="max-sm:hidden absolute -right-12 top-1/2 -translate-y-1/2 z-10 bg-black/50 backdrop-blur-sm border-0 text-white/80 hover:bg-black/70 hover:text-white" />
           </>
         )}
 
