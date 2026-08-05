@@ -3,6 +3,7 @@ import { AdminProjectList } from "@/components/admin/admin-project-list"
 import { SupabaseProject } from "@/lib/data/projects"
 import { FileQuestion, Plus } from "lucide-react"
 import Link from "next/link"
+import { LogoutButton } from "@/components/admin/logout-button"
 
 export const dynamic = "force-dynamic"
 
@@ -31,13 +32,16 @@ export default async function AdminProjectsPage() {
             Manage all your uploaded projects here.
           </p>
         </div>
-        <Link
-          href="/admin/upload"
-          className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-white text-black shadow hover:bg-white/80"
-        >
-          <Plus className="w-4 h-4" />
-          <span>New Project</span>
-        </Link>
+        <div className="flex items-center gap-3">
+          <LogoutButton />
+          <Link
+            href="/admin/upload"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-white text-black shadow hover:bg-white/80"
+          >
+            <Plus className="w-4 h-4" />
+            <span>New Project</span>
+          </Link>
+        </div>
       </div>
 
       {typedProjects.length === 0 ? (
