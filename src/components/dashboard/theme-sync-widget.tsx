@@ -4,10 +4,8 @@ import * as React from "react"
 import { Palette } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { useTheme } from "next-themes"
+import { getClampedLightness, useCustomThemeColor } from "@/lib/custom-theme-color"
 
-/** Lightness bounds that keep text readable on each theme */
-const DARK_LIGHTNESS = 7
-const LIGHT_LIGHTNESS = 97
 
 interface ColorData {
   x: number
@@ -36,20 +34,13 @@ function hslToHex(h: number, s: number, l: number): string {
   return `#${f(0)}${f(8)}${f(4)}`.toUpperCase()
 }
 
-/**
- * Determines the clamped lightness based on theme.
- * Dark mode: 4-8% range (defaults to 7%).
- * Light mode: 95-98% range (defaults to 97%).
- */
-function getClampedLightness(theme: string | undefined): number {
-  return theme === "light" ? LIGHT_LIGHTNESS : DARK_LIGHTNESS
-}
 
 export function ThemeSyncWidget() {
   const wheelRef = React.useRef<HTMLDivElement>(null)
   const dotRef = React.useRef<HTMLDivElement>(null)
   const hexTextRef = React.useRef<HTMLSpanElement>(null)
   const { resolvedTheme } = useTheme()
+  const { setHue, setSat } = useCustomThemeColor()
 
   const [state, setState] = React.useState<WidgetState>({
     hex: "#12131A",
@@ -72,9 +63,6 @@ export function ThemeSyncWidget() {
     themeRef.current = resolvedTheme
   }, [resolvedTheme])
 
-  /** Track last chosen hue/saturation so theme toggle can recalibrate */
-  const lastHueRef = React.useRef<number | null>(null)
-  const lastSatRef = React.useRef<number | null>(null)
 
   // Initialize center position after mount
   React.useEffect(() => {
@@ -88,20 +76,6 @@ export function ThemeSyncWidget() {
     }
   }, [])
 
-  /**
-   * When the theme toggles (light↔dark), recalibrate the --background
-   * lightness so it doesn't get stuck at 97% in dark mode or 7% in light.
-   */
-  React.useEffect(() => {
-    if (lastHueRef.current === null || lastSatRef.current === null) return
-    const lightness = getClampedLightness(resolvedTheme)
-    const hue = lastHueRef.current
-    const sat = lastSatRef.current
-    document.documentElement.style.setProperty(
-      "--background",
-      `hsl(${Math.round(hue)}, ${Math.round(sat)}%, ${lightness}%)`
-    )
-  }, [resolvedTheme])
 
   const calculateColor = (clientX: number, clientY: number): ColorData | null => {
     if (!wheelRef.current) return null
@@ -152,10 +126,6 @@ export function ThemeSyncWidget() {
         dotRef.current.style.backgroundColor = dotColor
       }
 
-      // Persist hue/saturation for theme-toggle recalibration
-      lastHueRef.current = h
-      lastSatRef.current = s
-
       // Update HEX text DOM directly
       if (hexTextRef.current) {
         hexTextRef.current.textContent = hex
@@ -172,6 +142,8 @@ export function ThemeSyncWidget() {
       )
 
       if (syncState) {
+        setHue(h)
+        setSat(s)
         setState({ hex, x, y })
       }
     })

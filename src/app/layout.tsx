@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { CustomThemeColorProvider, ThemeBackgroundSync } from "@/lib/custom-theme-color";
 import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
@@ -45,7 +46,10 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          {children}
+          <CustomThemeColorProvider>
+            <ThemeBackgroundSync />
+            {children}
+          </CustomThemeColorProvider>
         </ThemeProvider>
         <Toaster />
       </body>

@@ -1,5 +1,6 @@
 import { render, screen, fireEvent, act } from "@testing-library/react"
 import { ThemeSyncWidget } from "./theme-sync-widget"
+import { CustomThemeColorProvider, ThemeBackgroundSync } from "@/lib/custom-theme-color"
 
 // Mutable theme state for dynamic theme switching in tests
 let mockResolvedTheme = "dark"
@@ -9,6 +10,11 @@ jest.mock("next-themes", () => ({
     resolvedTheme: mockResolvedTheme,
   }),
 }))
+
+/** Wrapper that provides the required CustomThemeColor context */
+function Wrapper({ children }: { children: React.ReactNode }) {
+  return <CustomThemeColorProvider>{children}</CustomThemeColorProvider>
+}
 
 /**
  * Helper: mock getBoundingClientRect to simulate a 200×200 wheel at (0, 0).
@@ -30,6 +36,7 @@ function mockWheelRect() {
 describe("ThemeSyncWidget", () => {
   beforeEach(() => {
     document.documentElement.style.cssText = ""
+    localStorage.clear()
     mockResolvedTheme = "dark"
     jest.restoreAllMocks()
     jest.spyOn(window, "requestAnimationFrame").mockImplementation(
@@ -42,19 +49,19 @@ describe("ThemeSyncWidget", () => {
   })
 
   it("renders the widget title and hex label", () => {
-    render(<ThemeSyncWidget />)
+    render(<ThemeSyncWidget />, { wrapper: Wrapper })
     expect(screen.getByText(/global theme sync/i)).toBeInTheDocument()
     expect(screen.getByText(/hex/i)).toBeInTheDocument()
   })
 
   it("renders the color wheel slider", () => {
-    render(<ThemeSyncWidget />)
+    render(<ThemeSyncWidget />, { wrapper: Wrapper })
     const wheel = screen.getByRole("slider", { name: /color wheel/i })
     expect(wheel).toBeInTheDocument()
   })
 
   it("sets --background with hsl() format and 7% lightness in dark mode on pointer down", () => {
-    render(<ThemeSyncWidget />)
+    render(<ThemeSyncWidget />, { wrapper: Wrapper })
     const wheel = screen.getByRole("slider", { name: /color wheel/i })
 
     fireEvent.pointerDown(wheel, { clientX: 150, clientY: 100 })
@@ -67,7 +74,7 @@ describe("ThemeSyncWidget", () => {
 
   it("sets --background with hsl() format and 97% lightness in light mode", () => {
     mockResolvedTheme = "light"
-    render(<ThemeSyncWidget />)
+    render(<ThemeSyncWidget />, { wrapper: Wrapper })
     const wheel = screen.getByRole("slider", { name: /color wheel/i })
 
     fireEvent.pointerDown(wheel, { clientX: 150, clientY: 100 })
@@ -77,7 +84,7 @@ describe("ThemeSyncWidget", () => {
   })
 
   it("updates --background on pointer move during drag", () => {
-    render(<ThemeSyncWidget />)
+    render(<ThemeSyncWidget />, { wrapper: Wrapper })
     const wheel = screen.getByRole("slider", { name: /color wheel/i })
 
     fireEvent.pointerDown(wheel, { clientX: 150, clientY: 100 })
@@ -92,7 +99,7 @@ describe("ThemeSyncWidget", () => {
   })
 
   it("does not crash on pointer up and displays hex value", () => {
-    render(<ThemeSyncWidget />)
+    render(<ThemeSyncWidget />, { wrapper: Wrapper })
     const wheel = screen.getByRole("slider", { name: /color wheel/i })
 
     fireEvent.pointerDown(wheel, { clientX: 150, clientY: 100 })
@@ -102,7 +109,14 @@ describe("ThemeSyncWidget", () => {
   })
 
   it("recalibrates lightness when theme changes after a color was selected", () => {
-    const { rerender } = render(<ThemeSyncWidget />)
+    // Render both ThemeSyncWidget and ThemeBackgroundSync together,
+    // since recalibration now lives in ThemeBackgroundSync
+    const { rerender } = render(
+      <CustomThemeColorProvider>
+        <ThemeBackgroundSync />
+        <ThemeSyncWidget />
+      </CustomThemeColorProvider>
+    )
     const wheel = screen.getByRole("slider", { name: /color wheel/i })
 
     // Select a color in dark mode
@@ -113,10 +127,15 @@ describe("ThemeSyncWidget", () => {
     // Switch to light mode and re-render
     mockResolvedTheme = "light"
     act(() => {
-      rerender(<ThemeSyncWidget />)
+      rerender(
+        <CustomThemeColorProvider>
+          <ThemeBackgroundSync />
+          <ThemeSyncWidget />
+        </CustomThemeColorProvider>
+      )
     })
 
-    // The useEffect watching resolvedTheme should recalibrate
+    // ThemeBackgroundSync's useEffect should recalibrate
     const lightBg = document.documentElement.style.getPropertyValue("--background")
     expect(lightBg).toMatch(/97%\)$/)
   })
