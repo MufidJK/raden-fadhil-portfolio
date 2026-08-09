@@ -27,9 +27,25 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
+const title = "Raden Fadhil Triansyah | Hardware Engineer & IoT Developer";
+const description =
+  "Architecting robust physical-digital bridges. Specializing in low-latency telemetry, embedded systems, and scalable IoT infrastructures. I build hardware that thinks and software that acts.";
+
 export const metadata: Metadata = {
-  title: "Raden Fadhil Portfolio",
-  description: "Hardware Engineer & IoT Developer Portfolio",
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    locale: "en_US",
+    siteName: "Raden Fadhil Portfolio",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
 };
 
 export default function RootLayout({
