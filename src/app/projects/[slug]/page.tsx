@@ -7,32 +7,12 @@ import { Card } from "@/components/ui/card"
 import { MediaCarousel } from "@/components/projects/media-carousel"
 import { TopNavBar } from "@/components/top-nav-bar"
 import { SiteFooter } from "@/components/site-footer"
-import type { ProjectMedia } from "@/lib/data/projects"
-
-// ── Supabase Row Types (mirroring MCP-verified schema) ──
-
-interface ProjectMediaRow {
-  id: string
-  project_id: string | null
-  media_url: string
-  media_type: string | null
-  caption: string | null
-  sort_order: number | null
-  created_at: string | null
-}
-
-interface ProjectRow {
-  id: string
-  title: string
-  slug: string
-  description: string | null
-  technical_specs: Record<string, string> | null
-  created_at: string | null
-  updated_at: string | null
-  category: string | null
-  tech_stack: string[] | null
-  project_media: ProjectMediaRow[]
-}
+import {
+  fallbackProjects,
+  mapFallbackProjectToProjectRow,
+  type ProjectRow,
+  type ProjectMedia,
+} from "@/lib/data/projects"
 
 // ── Page Props ──
 
@@ -45,7 +25,7 @@ interface PageProps {
 export default async function ProjectDetailPage({ params }: PageProps) {
   const { slug } = await params
 
-  const { data: project, error } = await supabase
+  let { data: project, error } = await supabase
     .from("projects")
     .select("*, project_media(*)")
     .eq("slug", slug)
@@ -53,8 +33,16 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     .single<ProjectRow>()
 
   if (error || !project) {
+    const fallbackMatch = fallbackProjects.find((p) => p.slug === slug)
+    if (fallbackMatch) {
+      project = mapFallbackProjectToProjectRow(fallbackMatch)
+    }
+  }
+
+  if (!project) {
     notFound()
   }
+
 
   // Map Supabase project_media rows → MediaCarousel's ProjectMedia shape
   const carouselMedia: ProjectMedia[] = (project.project_media ?? []).map(

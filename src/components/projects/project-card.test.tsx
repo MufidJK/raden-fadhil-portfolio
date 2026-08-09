@@ -5,6 +5,7 @@ describe("ProjectCard", () => {
   const defaultProps = {
     id: "TEST_ID_01",
     title: "Test Project",
+    slug: "test-project",
     description: "This is a test description.",
     tags: ["React", "Jest"],
     category: "Robotics",

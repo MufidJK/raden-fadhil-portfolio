@@ -11,6 +11,7 @@ export interface ProjectMedia {
 export interface Project {
   id: string;
   title: string;
+  slug: string;
   description: string;
   tags: string[];
   category: string;
@@ -19,6 +20,46 @@ export interface Project {
   technicalSpecs: { label: string; value: string }[];
   media: ProjectMedia[];
 }
+
+export type ProjectRow = SupabaseProjectWithMedia;
+
+/**
+ * Maps a mock/fallback `Project` object into a `ProjectRow` shape matching Supabase query output.
+ */
+export function mapFallbackProjectToProjectRow(project: Project): ProjectRow {
+  const technical_specs: Record<string, string> = {};
+  if (project.technicalSpecs) {
+    for (const spec of project.technicalSpecs) {
+      technical_specs[spec.label] = spec.value;
+    }
+  }
+
+  const project_media: ProjectMediaRow[] = (project.media ?? []).map(
+    (m, index) => ({
+      id: m.id,
+      project_id: project.id,
+      media_url: m.url,
+      media_type: m.type,
+      caption: m.alt ?? m.aiPrompt ?? null,
+      sort_order: index,
+      created_at: null,
+    })
+  );
+
+  return {
+    id: project.id,
+    title: project.title,
+    slug: project.slug,
+    description: project.description,
+    technical_specs,
+    created_at: null,
+    updated_at: null,
+    category: project.category,
+    tech_stack: project.tags,
+    project_media,
+  };
+}
+
 
 /**
  * Raw row shape from the Supabase `project_media` table.
@@ -76,6 +117,7 @@ export function mapSupabaseProject(
   return {
     id: row.slug.toUpperCase().replace(/-/g, "_"),
     title: row.title,
+    slug: row.slug,
     description: row.description ?? "",
     tags: row.tech_stack ?? [],
     category: row.category ?? "Uncategorized",
@@ -144,6 +186,7 @@ export const fallbackProjects: Project[] = [
   {
     id: "REPTILE_NODE_V2",
     title: "Terrarium Climate Controller v2",
+    slug: "reptile-node-v2",
     description: "Closed-loop PID control system for maintaining micro-climates. Features dual ESP32 nodes, LoRa mesh networking, and sub-millimeter precision humidity sensing.",
     tags: ["C++", "ESP-IDF", "MQTT"],
     category: "Reptile IoT",
@@ -197,6 +240,7 @@ export const fallbackProjects: Project[] = [
   {
     id: "HEX_GAIT_01",
     title: "Hexapod Gait Engine",
+    slug: "hexapod-gait-engine",
     description: "Inverse kinematics solver running on an RTOS environment for a 18-DOF robotic platform.",
     tags: ["ROS2", "Python"],
     category: "Robotics",
@@ -240,6 +284,7 @@ export const fallbackProjects: Project[] = [
   {
     id: "PWR_RACK",
     title: "Smart Power Rack",
+    slug: "smart-power-rack",
     description: "Per-outlet power monitoring and remote switching for a 42U homelab rack.",
     tags: ["KiCad", "FreeRTOS"],
     category: "Automation",
@@ -282,6 +327,7 @@ export const fallbackProjects: Project[] = [
   {
     id: "LAB_DASH",
     title: "Homelab Dashboard UI",
+    slug: "homelab-dashboard",
     description: "A centralized, high-performance web dashboard integrating Grafana panels, Proxmox API metrics, and custom hardware sensor data via WebSockets.",
     tags: ["React", "Tailwind", "WebSocket"],
     category: "Web App",
@@ -330,6 +376,7 @@ export const fallbackProjects: Project[] = [
   {
     id: "EDGE_AI_VISION",
     title: "Tensor Vision M.2 Node",
+    slug: "tensor-vision-node",
     description: "Custom PCB design integrating a Coral Edge TPU via M.2 key E interface with an ESP32-S3. Performs on-device inference for security perimeter monitoring.",
     tags: ["KiCad", "TensorFlow Lite", "C++"],
     category: "Edge AI",
@@ -378,6 +425,7 @@ export const fallbackProjects: Project[] = [
   {
     id: "LORA_GATEWAY_SOLAR",
     title: "Autonomous LoRaWAN Gateway",
+    slug: "autonomous-lorawan-gateway",
     description: "A solar-powered mesh gateway deployed in remote areas. Handles up to 500 end-nodes utilizing SX1302 and ESP32, optimized for deep-sleep power states.",
     tags: ["LoRaWAN", "Zephyr RTOS", "C"],
     category: "IoT Network",
@@ -414,6 +462,7 @@ export const fallbackProjects: Project[] = [
   {
     id: "UAV_TELEMETRY",
     title: "RTOS Drone Telemetry Link",
+    slug: "uav-telemetry-link",
     description: "Low-latency RF telemetry module for custom drone platforms. Built on Zephyr RTOS, delivering critical flight metrics and PID loop feedback at a 500Hz refresh rate.",
     tags: ["Zephyr", "RF Design", "C++"],
     category: "Robotics",
@@ -456,6 +505,7 @@ export const fallbackProjects: Project[] = [
   {
     id: "FPGA_SDR",
     title: "FPGA Software-Defined Radio",
+    slug: "fpga-sdr",
     description: "High-speed signal acquisition and filtering using an iCE40 FPGA. Implements custom DSP blocks in Verilog for analyzing 2.4GHz spectrum interference.",
     tags: ["Verilog", "FPGA", "DSP"],
     category: "Signal Processing",
