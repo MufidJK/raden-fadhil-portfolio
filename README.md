@@ -2,7 +2,7 @@
   <img src="public/logo.svg" alt="Raden Fadhil Logo" width="120" />
 </p>
 
-<h1 align="center">Raden Fadhil — Precision Portfolio</h1>
+<h1 align="center">Raden Fadhil Portfolio</h1>
 
 <p align="center">
   <strong>High-Performance Hardware Engineering & Full-Stack IoT Portfolio with Live Admin CMS & Telemetry Dashboard</strong>
