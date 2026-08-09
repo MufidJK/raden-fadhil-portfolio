@@ -3,7 +3,7 @@
 import * as React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
+import * as z from "zod/v4"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -19,45 +19,114 @@ import {
 } from "@/components/ui/form"
 
 const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  subject: z.string().min(3, "Subject must be at least 3 characters"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+  fullName: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be at most 100 characters"),
+  email: z
+    .string()
+    .email("Invalid email address")
+    .max(100, "Email must be at most 100 characters"),
+  subject: z
+    .string()
+    .min(3, "Subject must be at least 3 characters")
+    .max(100, "Subject must be at most 100 characters"),
+  message: z
+    .string()
+    .min(10, "Message must be at least 10 characters")
+    .max(5000, "Message must be at most 5000 characters"),
+  honeypot: z.string().max(0).optional(),
 })
 
 type FormValues = z.infer<typeof formSchema>
+
+interface ApiErrorResponse {
+  success: false
+  error: string
+  details?: Array<{ field: string; message: string }>
+}
+
+interface ApiSuccessResponse {
+  success: true
+}
+
+type ApiResponse = ApiErrorResponse | ApiSuccessResponse
 
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      fullName: "",
       email: "",
       subject: "",
       message: "",
+      honeypot: "",
     },
   })
 
   async function onSubmit(data: FormValues) {
     setIsSubmitting(true)
-    // Simulated network delay for mocking (STRICT MOCKING)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    console.log("Form Submitted:", data)
-    setIsSubmitting(false)
-    toast("Message Sent!", {
-      description: "Thanks for reaching out. I'll get back to you soon.",
-    })
-    form.reset()
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+
+      const json: ApiResponse = await response.json()
+
+      if (!response.ok || !json.success) {
+        const errorMessage =
+          "error" in json
+            ? json.error
+            : "Something went wrong. Please try again."
+        toast.error("Failed to send message", {
+          description: errorMessage,
+        })
+        // Form data is preserved — user does not need to retype
+        return
+      }
+
+      // Success — clear form and show toast
+      toast.success("Message Sent!", {
+        description: "Thanks for reaching out. I'll get back to you soon.",
+      })
+      form.reset()
+    } catch {
+      toast.error("Network error", {
+        description: "Could not reach the server. Please check your connection and try again.",
+      })
+      // Form data is preserved on network error
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
     <div className="bg-card md:bg-muted/10 border border-border/50 rounded-2xl p-6 md:p-8">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          {/* Honeypot field — hidden from humans, traps bots */}
+          <div className="absolute overflow-hidden" style={{ left: "-9999px", top: "-9999px" }} aria-hidden="true">
+            <FormField
+              control={form.control}
+              name="honeypot"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Do not fill this out</FormLabel>
+                  <FormControl>
+                    <Input tabIndex={-1} autoComplete="off" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+
           <FormField
             control={form.control}
-            name="name"
+            name="fullName"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Full Name <span className="text-destructive">*</span></FormLabel>
