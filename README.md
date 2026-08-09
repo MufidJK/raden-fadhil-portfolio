@@ -2,7 +2,7 @@
   <img src="public/logo.svg" alt="Raden Fadhil Logo" width="120" />
 </p>
 
-<h1 align="center">Raden Fadhil Portfolio</h1>
+<h1 align="center">Raden Fadhil Portfolio Web</h1>
 
 <p align="center">
   <strong>High-Performance Hardware Engineering & Full-Stack IoT Portfolio with Live Admin CMS & Telemetry Dashboard</strong>
@@ -26,32 +26,32 @@
 
 ## ✨ Features
 
-* 🎨 **Theme Engine & Custom Ambient RGB Picker:** Dynamic light/dark mode switching powered by `next-themes`, paired with an interactive RGB color wheel picker widget (`ThemeSyncWidget`) to dynamically update site-wide ambient glow and accent colors in real time.
-* 📦 **Resilient Supabase Project Showcase:** Real-time database integration querying project records from Supabase, featuring automatic seamless fallback to a rich static dataset (`MOCK_PROJECTS`) ensuring zero downtime when the database is unpopulated or unreachable.
-* 🎬 **Dynamic Project Detail Pages & Multi-Media Carousel:** SSR-rendered dynamic routes at `/projects/[slug]` featuring interactive Embla carousels with autoplay support for multi-image showcases and embedded demo videos alongside technical hardware specifications.
-* 🔒 **Auth-Protected Admin CMS & Media Dropzone:** Secure `/admin` portal guarded by Next.js Proxy middleware and `@supabase/ssr` cookie sessions. Includes drag-and-drop media upload (`media-dropzone.tsx`) direct to Supabase Storage (`portfolio-media`), project creation, update forms, and deletion confirmation dialogs.
-* 🛡️ **Hardened Contact Form API:** Robust contact interface built with React Hook Form and Zod validation, fortified against spam through a hidden honeypot trap field and in-memory client IP rate-limiting, delivering messages via Resend email API.
-* 📊 **Real-Time IoT Telemetry Dashboard:** Live hardware telemetry widget (`TelemetryWidget`) rendering simulated real-time microcontroller CPU load, RAM allocation, sensor node activity, and system power metrics.
-* 🧪 **Bulletproof TDD Test Suite:** Meticulously typed codebase backed by a comprehensive unit test suite built with Jest and React Testing Library covering UI components, form validation, and server route handlers.
+- 🎨 **Theme Engine & Custom Ambient RGB Picker:** Dynamic light/dark mode switching powered by `next-themes`, paired with an interactive RGB color wheel picker widget (`ThemeSyncWidget`) to dynamically update site-wide ambient glow and accent colors in real time.
+- 📦 **Resilient Supabase Project Showcase:** Real-time database integration querying project records from Supabase, featuring automatic seamless fallback to a rich static dataset (`MOCK_PROJECTS`) ensuring zero downtime when the database is unpopulated or unreachable.
+- 🎬 **Dynamic Project Detail Pages & Multi-Media Carousel:** SSR-rendered dynamic routes at `/projects/[slug]` featuring interactive Embla carousels with autoplay support for multi-image showcases and embedded demo videos alongside technical hardware specifications.
+- 🔒 **Auth-Protected Admin CMS & Media Dropzone:** Secure `/admin` portal guarded by Next.js Proxy middleware and `@supabase/ssr` cookie sessions. Includes drag-and-drop media upload (`media-dropzone.tsx`) direct to Supabase Storage (`portfolio-media`), project creation, update forms, and deletion confirmation dialogs.
+- 🛡️ **Hardened Contact Form API:** Robust contact interface built with React Hook Form and Zod validation, fortified against spam through a hidden honeypot trap field and in-memory client IP rate-limiting, delivering messages via Resend email API.
+- 📊 **Real-Time IoT Telemetry Dashboard:** Live hardware telemetry widget (`TelemetryWidget`) rendering simulated real-time microcontroller CPU load, RAM allocation, sensor node activity, and system power metrics.
+- 🧪 **Bulletproof TDD Test Suite:** Meticulously typed codebase backed by a comprehensive unit test suite built with Jest and React Testing Library covering UI components, form validation, and server route handlers.
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Category | Technology | Locked Version | Description |
-| :--- | :--- | :--- | :--- |
-| **Framework** | Next.js | `16.2.9` | App Router, Server Components, React Compiler |
-| **Library** | React / React DOM | `19.2.4` | Component UI library & DOM renderer |
-| **Language** | TypeScript | `5.9.3` | Strict static typing system |
-| **Styling** | Tailwind CSS | `4.3.2` | Utility-first CSS engine with `@tailwindcss/postcss` |
-| **UI Components** | Shadcn UI / Radix | `4.12.0` | Accessible primitive components & Radix UI icons |
-| **Animations** | Framer Motion | `12.42.2` | Dynamic layout animations and scroll reveals |
-| **Carousel** | Embla Carousel | `8.6.0` | Smooth touch-enabled media slider with autoplay |
-| **Database & Auth**| Supabase JS / SSR | `2.111.0` / `0.12.4` | PostgreSQL database, Storage bucket, and SSR Auth |
-| **Forms** | React Hook Form | `7.80.0` | Performant client form state management |
-| **Validation** | Zod | `4.4.3` | Schema declaration and payload validation |
-| **Email** | Resend | `6.18.1` | Email delivery service SDK for contact form |
-| **Testing** | Jest / React Testing Library | `30.4.2` / `16.3.2` | Test runner, DOM assertion setup, and jsdom environment |
+| Category            | Technology                   | Locked Version       | Description                                             |
+| :------------------ | :--------------------------- | :------------------- | :------------------------------------------------------ |
+| **Framework**       | Next.js                      | `16.2.9`             | App Router, Server Components, React Compiler           |
+| **Library**         | React / React DOM            | `19.2.4`             | Component UI library & DOM renderer                     |
+| **Language**        | TypeScript                   | `5.9.3`              | Strict static typing system                             |
+| **Styling**         | Tailwind CSS                 | `4.3.2`              | Utility-first CSS engine with `@tailwindcss/postcss`    |
+| **UI Components**   | Shadcn UI / Radix            | `4.12.0`             | Accessible primitive components & Radix UI icons        |
+| **Animations**      | Framer Motion                | `12.42.2`            | Dynamic layout animations and scroll reveals            |
+| **Carousel**        | Embla Carousel               | `8.6.0`              | Smooth touch-enabled media slider with autoplay         |
+| **Database & Auth** | Supabase JS / SSR            | `2.111.0` / `0.12.4` | PostgreSQL database, Storage bucket, and SSR Auth       |
+| **Forms**           | React Hook Form              | `7.80.0`             | Performant client form state management                 |
+| **Validation**      | Zod                          | `4.4.3`              | Schema declaration and payload validation               |
+| **Email**           | Resend                       | `6.18.1`             | Email delivery service SDK for contact form             |
+| **Testing**         | Jest / React Testing Library | `30.4.2` / `16.3.2`  | Test runner, DOM assertion setup, and jsdom environment |
 
 ---
 
@@ -60,8 +60,9 @@
 ### Prerequisites
 
 Ensure your environment satisfies the following requirements:
-* **Node.js:** `>= 18.18.0` or `>= 20.9.0` (Recommended: `Node.js v20+` or `v24+`)
-* **Package Manager:** `npm` (`v10+`)
+
+- **Node.js:** `>= 18.18.0` or `>= 20.9.0` (Recommended: `Node.js v20+` or `v24+`)
+- **Package Manager:** `npm` (`v10+`)
 
 ### 1. Installation
 
@@ -91,8 +92,9 @@ RESEND_API_KEY=re_your_resend_api_key
 ```
 
 > 🔑 **Where to find API Keys:**
-> * **Supabase Keys:** Go to your [Supabase Dashboard](https://supabase.com/dashboard) → **Project Settings** → **API**. Copy the `URL`, `anon` key, and `service_role` key.
-> * **Resend API Key:** Log in to your [Resend Dashboard](https://resend.com/api-keys) and create a new API key.
+>
+> - **Supabase Keys:** Go to your [Supabase Dashboard](https://supabase.com/dashboard) → **Project Settings** → **API**. Copy the `URL`, `anon` key, and `service_role` key.
+> - **Resend API Key:** Log in to your [Resend Dashboard](https://resend.com/api-keys) and create a new API key.
 
 ### 3. Run Development Server
 
@@ -110,15 +112,15 @@ Navigate to `http://localhost:3000` in your browser.
 
 Run any of the following scripts using `npm run <script-name>`:
 
-| Script | Command | Purpose |
-| :--- | :--- | :--- |
-| `dev` | `next dev` | Launches Next.js development server with hot-reloading at `localhost:3000`. |
-| `prebuild` | `rm -rf .next` | Automatically cleans cached `.next` build output prior to compilation. |
-| `build` | `next build` | Compiles the production build bundle. |
-| `start` | `next start` | Starts the production server for pre-built assets. |
-| `lint` | `eslint` | Executes ESLint to check for syntax and style issues. |
-| `test` | `jest` | Runs unit tests across all test suites. |
-| `test:watch` | `jest --watch` | Runs Jest test runner in continuous interactive watch mode. |
+| Script       | Command        | Purpose                                                                     |
+| :----------- | :------------- | :-------------------------------------------------------------------------- |
+| `dev`        | `next dev`     | Launches Next.js development server with hot-reloading at `localhost:3000`. |
+| `prebuild`   | `rm -rf .next` | Automatically cleans cached `.next` build output prior to compilation.      |
+| `build`      | `next build`   | Compiles the production build bundle.                                       |
+| `start`      | `next start`   | Starts the production server for pre-built assets.                          |
+| `lint`       | `eslint`       | Executes ESLint to check for syntax and style issues.                       |
+| `test`       | `jest`         | Runs unit tests across all test suites.                                     |
+| `test:watch` | `jest --watch` | Runs Jest test runner in continuous interactive watch mode.                 |
 
 ---
 
@@ -179,18 +181,18 @@ The application is optimized for deployment on [Vercel](https://vercel.com).
 2. Import the project into the [Vercel Dashboard](https://vercel.com/new).
 3. Set the **Framework Preset** to **Next.js**.
 4. Configure the **Environment Variables** in Vercel settings (add all 4 keys from `.env.example`):
-   * `NEXT_PUBLIC_SUPABASE_URL`
-   * `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   * `SUPABASE_SERVICE_ROLE_KEY`
-   * `RESEND_API_KEY`
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `RESEND_API_KEY`
 5. Click **Deploy**.
 
 ---
 
 ## 📬 Contact
 
-**Raden Fadhil Triansyah** — *Hardware Engineer & IoT Full-Stack Developer*
+**Raden Fadhil Triansyah** — _Hardware Engineer & IoT Full-Stack Developer_
 
-* 📧 **Email:** [radenfadhiltriansyah99@gmail.com](mailto:radenfadhiltriansyah99@gmail.com)
-* 📸 **Instagram:** [@biji_tech](https://instagram.com/biji_tech)
-* 💼 **LinkedIn:** [Raden Fadhil Triansyah](https://linkedin.com/in/raden-fadhil-triansyah)
+- 📧 **Email:** [radenfadhiltriansyah99@gmail.com](mailto:radenfadhiltriansyah99@gmail.com)
+- 📸 **Instagram:** [@biji_tech](https://instagram.com/biji_tech)
+- 💼 **LinkedIn:** [Raden Fadhil Triansyah](https://linkedin.com/in/raden-fadhil-triansyah)
